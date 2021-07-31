@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComputadorasService } from '../../services/computadoras.service';
+import { OrdenadoresService } from 'src/app/services/ordenadores.service';
 
 @Component({
   selector: 'app-inicio',
@@ -8,16 +8,17 @@ import { ComputadorasService } from '../../services/computadoras.service';
 })
 export class InicioComponent implements OnInit {
   computadoras:any[] = [];
-
-  constructor(private _computadorasService:ComputadorasService) { }
+  
+  constructor(private _ordenadoresService:OrdenadoresService) {
+    
+   }
 
   ngOnInit(): void {
     this.getComputadoras();
-    
   }
 
   getComputadoras(){
-    this._computadorasService.getComputadoras().subscribe(data => {
+    this._ordenadoresService.getComputadoras().subscribe(data => {
       this.computadoras = [];
 
       data.forEach((element:any) => {
@@ -26,6 +27,7 @@ export class InicioComponent implements OnInit {
           ...element.payload.doc.data()
         });
       });
+      console.log(this.computadoras);
       
     });
   }

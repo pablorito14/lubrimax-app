@@ -1,4 +1,38 @@
-<div *ngFor="let pc of computadoras">
-  <p>{{ pc.nombre }}</p>
-  <p>{{ pc.procesador }}</p>
+<div class="container">
+  <div class="row justify-content-center">
+    
+    <div *ngFor="let pc of computadoras" class="col-12 col-md-3">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <p class="h5 text-center">
+            <a class="text-secondary text-decoration-none" data-toggle="collapse" href="#ordenador-{{ pc.cod }}" role="button" aria-expanded="false" aria-controls="collapse">
+              <i class="fas fa-{{ pc.tipo }}"></i> {{ pc.teamviewer }} <i class="fas fa-angle-down"></i>
+            </a>
+          </p>
+          <div class="collapse" id="ordenador-{{ pc.cod }}">
+            <ul class="list-unstyled">
+              <li>Codigo: {{ pc.cod }}</li>
+              <li>Nombre equipo: </li>
+              <li>IP Fija: </li>
+              <li>Teamviewer: </li>
+              <li>Ultimo mantenimiento: </li>  
+            </ul>
+            <div class="text-center">
+              <button class="btn btn-dark mr-2" [routerLink]="['/editar-pc/',pc.id]">Editar</button>
+              <button class="btn btn-secondary" [routerLink]="['/mantenimiento-pc/',pc.id]">Mantenimiento</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-6 col-md-2 text-center">
+      <div class="card shadow">
+        <div class="card-body">
+          <i routerLink="/agregar-pc" class="fas fa-plus-circle fa-2x text-secondary"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>

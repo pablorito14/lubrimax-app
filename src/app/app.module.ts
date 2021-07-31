@@ -4,24 +4,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { ListPcComponent } from './pages/list-pc/list-pc.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.prod';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { EditarPcComponent } from './pages/editar-pc/editar-pc.component';
+import { MantenimientoPcComponent } from './pages/mantenimiento-pc/mantenimiento-pc.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ListPcComponent,
-    InicioComponent
+    InicioComponent,
+    EditarPcComponent,
+    MantenimientoPcComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

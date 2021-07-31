@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "lubrimax-app": {
+      "hosting": {
+        "lubrimax-app": [
+          "lubrimax-app"
+        ]
+      }
+    }
+  }
+}

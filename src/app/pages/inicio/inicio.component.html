@@ -1,7 +1,6 @@
-<div class="container">
   <div class="row justify-content-center">
     
-    <div *ngFor="let pc of computadoras" class="col-12 col-md-3">
+    <div *ngFor="let pc of computadoras" class="col-12 col-md-4">
       <div class="card shadow mb-3">
         <div class="card-body">
           <p class="h5 text-center">
@@ -10,16 +9,32 @@
             </a>
           </p>
           <div class="collapse" id="ordenador-{{ pc.cod }}">
-            <ul class="list-unstyled">
-              <li>Codigo: {{ pc.cod }}</li>
-              <li>Nombre equipo: </li>
-              <li>IP Fija: </li>
-              <li>Teamviewer: </li>
-              <li>Ultimo mantenimiento: </li>  
-            </ul>
+            <table class="table table-sm">
+              <tr>
+                <td><b>Codigo</b></td>
+                <td>{{ pc.cod }}</td>
+              </tr>            
+              <tr>
+                <td><b>Nombre Equipo</b></td>
+                <td>{{ pc.nombre_equipo }}</td>
+              </tr>
+              <tr>
+                <td><b>IP Fija</b></td>
+                <td>{{ pc.ip_fija }}</td>
+              </tr>
+              <tr>
+                <td><b>TeamViewer</b></td>
+                <td>{{ pc.teamviewer }}</td>
+              </tr>
+              <tr>
+                <td><b>Ultimo mant.</b></td>
+                <td></td>
+              </tr>
+            </table>
+            
             <div class="text-center">
               <button class="btn btn-dark mr-2" [routerLink]="['/editar-pc/',pc.id]">Editar</button>
-              <button class="btn btn-secondary" [routerLink]="['/mantenimiento-pc/',pc.id]">Mantenimiento</button>
+              <button class="btn btn-secondary" [routerLink]="['/mantenimiento-pc/',pc.cod]">Mantenimiento</button>
           </div>
           </div>
         </div>
@@ -30,9 +45,8 @@
       <div class="card shadow">
         <div class="card-body">
           <i routerLink="/agregar-pc" class="fas fa-plus-circle fa-2x text-secondary"></i>
+          
         </div>
       </div>
     </div>
   </div>
-  
-</div>

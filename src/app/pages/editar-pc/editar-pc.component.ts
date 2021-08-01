@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrdenadoresService } from '../../services/ordenadores.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-editar-pc',
   templateUrl: './editar-pc.component.html',
-  styles: [
-  ]
+  styleUrls: ['./editar-pc.component.css']
 })
 export class EditarPcComponent implements OnInit {
   createOrdenador:FormGroup;
@@ -21,6 +21,7 @@ export class EditarPcComponent implements OnInit {
       private fb:FormBuilder,
       private _ordenadoresService:OrdenadoresService,
       private router:Router,
+      private toastr:ToastrService,
       private aRoute:ActivatedRoute
   ) { 
     this.createOrdenador = this.fb.group({
@@ -30,6 +31,7 @@ export class EditarPcComponent implements OnInit {
       ip_fija: ['',Validators.required],
       tipo: ['',Validators.required],
     });
+    
     // this.createOrdenador = null;
     this.id = this.aRoute.snapshot.paramMap.get('id');
   }
@@ -65,10 +67,12 @@ export class EditarPcComponent implements OnInit {
           .agregarOrdenador(ordenador)
           .then(() => {
             this.loading = false;
+            this.toastr.success('Computadora agregada');
             this.router.navigate(['/home']);
           })
           .catch(error => {
             console.log(error);
+            this.toastr.error('Ocurrio un error');
             this.loading = false;
           })
   }
@@ -86,11 +90,12 @@ export class EditarPcComponent implements OnInit {
     this._ordenadoresService.actualizarOrdenador(id,ordenador)
           .then(() => {
             this.loading = false;
+            this.toastr.success('Datos de la computadora actualizados');
             this.router.navigate(['/home']);
-
           })
           .catch(error => {
             console.log(error);
+            this.toastr.error('Ocurrio un error');
           })
   }
 

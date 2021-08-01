@@ -11,6 +11,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EditarPcComponent } from './pages/editar-pc/editar-pc.component';
 import { MantenimientoPcComponent } from './pages/mantenimiento-pc/mantenimiento-pc.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { HistorialMantComponent } from './pages/historial-mant/historial-mant.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +21,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     InicioComponent,
     EditarPcComponent,
-    MantenimientoPcComponent
+    MantenimientoPcComponent,
+    HistorialMantComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

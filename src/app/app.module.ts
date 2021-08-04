@@ -12,8 +12,14 @@ import { EditarPcComponent } from './pages/editar-pc/editar-pc.component';
 import { MantenimientoPcComponent } from './pages/mantenimiento-pc/mantenimiento-pc.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { HistorialMantComponent } from './pages/historial-mant/historial-mant.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { InputComponent } from './components/input/input.component';
+import { DesplegablePcComponent } from './components/desplegable-pc/desplegable-pc.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { ComputadoraPipe } from './pipes/computadora.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +28,12 @@ import { HistorialMantComponent } from './pages/historial-mant/historial-mant.co
     InicioComponent,
     EditarPcComponent,
     MantenimientoPcComponent,
-    HistorialMantComponent
+    HistorialMantComponent,
+    DatepickerComponent,
+    InputComponent,
+    DesplegablePcComponent,
+    BackButtonComponent,
+    ComputadoraPipe
   ],
   imports: [
     BrowserModule,
@@ -31,7 +42,9 @@ import { HistorialMantComponent } from './pages/historial-mant/historial-mant.co
     AngularFirestoreModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BsDatepickerModule.forRoot()
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

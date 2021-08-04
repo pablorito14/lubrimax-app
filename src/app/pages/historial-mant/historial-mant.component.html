@@ -1,1 +1,60 @@
-<p>historial-mant works!</p>
+<div class="row justify-content-center">
+    
+  <div class="col-12">
+    <div class="card shadow mb-3">
+      <div class="card-body">
+        <p class="h5 text-center">
+          Listado de mantenimientos
+        </p>
+        <div class="row my-3">
+          <div class="col-12 col-md">
+            <buttom class="btn btn-dark" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
+          </div>
+
+          <div class="col-12 col-md text-right">
+            <div class="btn-group" role="group">
+              
+              <button type="button" (click)="resetearTable()"
+                class="btn btn-outline-dark">Mostrar todo</button>
+              <form [formGroup]="formFiltro">
+                <app-desplegable-pc 
+                  formControlName="filtro" 
+                  (change)="filtrarResultados()" >
+                </app-desplegable-pc>
+            </form>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tr>
+              <th>Fecha</th>
+              <th>Computadora</th>
+              <th>Tareas estandar realizadas</th>
+              <th>Otras tareas</th>
+              <th></th>
+            </tr>
+            <!-- <tr>
+              <td>28 de Julio de 2021</td>
+              <td>VENTA 4</td>
+              <td>Limpieza de archivos temporales, control de actualizaciones</td>
+              <td>asdasdasadasdasdasss</td>
+              <td>Editar</td>
+            </tr> -->
+            <tr *ngFor="let mant of mantenimientos | computadora:filtro">
+              <td>{{ mant.fecha }}</td>
+              <td>{{ mant.computadora }}</td>
+              <td [innerHTML]="mant.tareas"></td>
+              <td [innerHTML]="mant.other"></td>
+              <td><a [routerLink]="['/editar-mantenimiento/',mant.cod,mant.id]">Editar</a></td>
+            </tr>      
+          </table>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>

@@ -11,30 +11,30 @@
           <div class="collapse" id="ordenador-{{ pc.cod }}">
             <table class="table table-sm">
               <tr>
-                <td><b>Codigo</b></td>
+                <th>Codigo</th>
                 <td>{{ pc.cod }}</td>
               </tr>            
               <tr>
-                <td><b>Nombre Equipo</b></td>
+                <th>Nombre Equipo</th>
                 <td>{{ pc.nombre_equipo }}</td>
               </tr>
               <tr>
-                <td><b>IP Fija</b></td>
+                <th>IP Fija</th>
                 <td>{{ pc.ip_fija }}</td>
               </tr>
               <tr>
-                <td><b>TeamViewer</b></td>
+                <th>TeamViewer</th>
                 <td>{{ pc.teamviewer }}</td>
               </tr>
               <tr>
-                <td><b>Ultimo mant.</b></td>
+                <th>Ultimo mant.</th>
                 <td></td>
               </tr>
             </table>
             
             <div class="text-center">
               <button class="btn btn-dark mr-2" [routerLink]="['/editar-pc/',pc.id]">Editar</button>
-              <button class="btn btn-secondary" [routerLink]="['/mantenimiento-pc/',pc.cod]">Mantenimiento</button>
+              <button class="btn btn-secondary" [routerLink]="['/agregar-mantenimiento/',pc.cod]">Mantenimiento</button>
           </div>
           </div>
         </div>

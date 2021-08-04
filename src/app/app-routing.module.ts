@@ -9,7 +9,9 @@ const routes: Routes = [
   {path: 'home',component:InicioComponent},
   {path: 'agregar-pc',component:EditarPcComponent},
   {path: 'editar-pc/:id',component:EditarPcComponent},
-  {path: 'mantenimiento-pc/:id',component:MantenimientoPcComponent},
+  {path: 'agregar-mantenimiento',component:MantenimientoPcComponent},
+  {path: 'agregar-mantenimiento/:id',component:MantenimientoPcComponent},
+  {path: 'editar-mantenimiento/:id/:mant',component:MantenimientoPcComponent},
   {path: 'historial-mant',component:HistorialMantComponent},
   {path: '**',pathMatch:'full', redirectTo: 'home'}
 ];

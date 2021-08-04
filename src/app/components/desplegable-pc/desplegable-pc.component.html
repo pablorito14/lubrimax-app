@@ -1,0 +1,7 @@
+<select class="form-control" #comp (change)="cambiarComp(comp.value)">
+	<option value="" [disabled]="compValid">-- Seleccionar PC --</option>
+	<option *ngFor="let pc of arrPC" 
+				value="{{ pc.cod }}" 
+				[selected]="pc.cod == computadora">{{ pc.nombre }}</option>
+
+</select>

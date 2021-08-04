@@ -27,7 +27,7 @@ export class InicioComponent implements OnInit {
           ...element.payload.doc.data()
         });
       });
-      console.log(this.computadoras);
+      // console.log(this.computadoras);
       
     });
   }

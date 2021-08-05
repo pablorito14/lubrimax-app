@@ -117,6 +117,7 @@ export class MantenimientoPcComponent implements OnInit {
 
   agregarMantenimiento(){
     const mant:any = this.generarData();
+    this.toastr.success(mant.cod);
     this.loading = true;
     this._mantenimientosService
         .agregarMantenimiento(mant)

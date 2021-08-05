@@ -134,13 +134,15 @@ export class MantenimientoPcComponent implements OnInit {
   }
 
   editarMantenimiento(id:string){
-    console.log('actualizar datos de id_mant: '+id);
+    this.toastr.error('actualizar datos de id_mant: '+id);
+    // console.log('actualizar datos de id_mant: '+id);
   }
 
   editar(){
     if(this.id_mant !== null){
       this.titulo = "Editar mantenimiento";
-      console.log('buscar datos en la bd');
+      this.toastr.error('Cargar datos de id_mant: '+this.aRoute.snapshot.paramMap.get('mant'));
+      // console.log('buscar datos en la bd');
     }
   }
 

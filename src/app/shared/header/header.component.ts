@@ -12,4 +12,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  cerrarMenu(){
+    console.log('cerrar menu');
+    var menu = document.getElementById('navbarNavDropdown');
+    console.log(menu);
+  }
+
 }

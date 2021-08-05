@@ -114,13 +114,13 @@ export class MantenimientoPcComponent implements OnInit {
     // const mant:any = this.generarData();
 
   //  
-  // const fecha = this.createMant.value.fecha;
-  // const arrFecha = fecha.split('/')
+  const fecha = this.createMant.value.fecha;
+  const arrFecha = fecha.split('/')
 
   var other:string = this.createMant.value.other;
-  // if(other != ''){
-  //   other = other.replace(/\n/g, "<br />");
-  // }
+  if(other != ''){
+    other = other.replace(/\n/g, "<br />");
+  }
 
   const mant:any={
     cod: this.createMant.value.cod,

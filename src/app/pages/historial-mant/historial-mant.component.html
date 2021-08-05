@@ -7,15 +7,15 @@
           Listado de mantenimientos
         </p>
         <div class="row my-3">
-          <div class="col-12 col-md">
-            <buttom class="btn btn-dark" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
+          <div class="col-12 col-md text-center text-md-left">
+            <buttom class="btn btn-dark mb-3 mb-md-0" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
           </div>
 
-          <div class="col-12 col-md text-right">
+          <div class="col-12 col-md text-center text-md-right ">
             <div class="btn-group" role="group">
               
               <button type="button" (click)="resetearTable()"
-                class="btn btn-outline-dark">Mostrar todo</button>
+                class="btn btn-outline-dark px-2">Mostrar todo</button>
               <form [formGroup]="formFiltro">
                 <app-desplegable-pc 
                   formControlName="filtro" 
@@ -25,7 +25,8 @@
             </div>
           </div>
         </div>
-        <div class="table-responsive">
+        <!-- TABLA MD -->
+        <div class="d-none d-md-block">
           <table class="table table-sm">
             <tr>
               <th>Fecha</th>
@@ -34,16 +35,9 @@
               <th>Otras tareas</th>
               <th></th>
             </tr>
-            <!-- <tr>
-              <td>28 de Julio de 2021</td>
-              <td>VENTA 4</td>
-              <td>Limpieza de archivos temporales, control de actualizaciones</td>
-              <td>asdasdasadasdasdasss</td>
-              <td>Editar</td>
-            </tr> -->
             <tr *ngFor="let mant of mantenimientos | computadora:filtro">
               <td>{{ mant.fecha }}</td>
-              <td>{{ mant.computadora }}</td>
+              <td>{{ mant.nombre }}</td>
               <td [innerHTML]="mant.tareas"></td>
               <td [innerHTML]="mant.other"></td>
               <td><a [routerLink]="['/editar-mantenimiento/',mant.cod,mant.id]">Editar</a></td>
@@ -51,6 +45,37 @@
           </table>
           
           
+        </div>
+        <!-- LISTADO XS -->
+        <div class="d-block d-md-none">
+          <div class="border-top py-3" *ngFor="let mant of mantenimientos | computadora:filtro">
+            <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+                href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
+                aria-controls="collapse">
+                <span>{{ mant.fecha2 | date:'longDate' }}</span><br>
+                <span>{{ mant.fecha }} | {{ mant.nombre }}</span>
+                
+                <span class="float-right"><i class="fas fa-angle-down"></i></span>
+            </a>
+
+            <div class="collapse" id="mantenimiento-{{ mant.id }}">
+              <table class="table table-sm mt-2">
+                <tr>
+                  <th>Tareas realizadas</th>
+                  <td [innerHTML]="mant.tareas"></td>
+                </tr>
+                <tr>
+                  <th>Tareas adicionales</th>
+                  <td [innerHTML]="mant.other"></td>
+                </tr>
+              </table>
+
+              <div class="text-center">
+                <a class="btn btn-info btn-block" [routerLink]="['/editar-mantenimiento/',mant.cod,mant.id]">Editar</a>
+
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

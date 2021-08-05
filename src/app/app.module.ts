@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,11 @@ import { InputComponent } from './components/input/input.component';
 import { DesplegablePcComponent } from './components/desplegable-pc/desplegable-pc.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { ComputadoraPipe } from './pipes/computadora.pipe';
+
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs);
+
 
 @NgModule({
   declarations: [
@@ -46,7 +51,7 @@ import { ComputadoraPipe } from './pipes/computadora.pipe';
     BsDatepickerModule.forRoot()
     
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

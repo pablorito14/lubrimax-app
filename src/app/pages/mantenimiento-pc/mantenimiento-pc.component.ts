@@ -59,11 +59,6 @@ export class MantenimientoPcComponent implements OnInit {
       other = other.replace(/\n/g, "<br />");
     }
 
-
-    //agregar fecha a partir de la seleccionada y convertirla a unix
-    // var timestamp = Date.now();
-    // var date = new Date(timestamp);
-    // new Date('2012.08.10').getTime() / 1000
     const mant:any={
       cod: this.createMant.value.cod,
       fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
@@ -116,7 +111,34 @@ export class MantenimientoPcComponent implements OnInit {
 
 
   agregarMantenimiento(){
-    const mant:any = this.generarData();
+    // const mant:any = this.generarData();
+
+  //  
+  const fecha = this.createMant.value.fecha;
+  const arrFecha = fecha.split('/')
+
+  var other:string = this.createMant.value.other;
+  if(other != ''){
+    other = other.replace(/\n/g, "<br />");
+  }
+
+  const mant:any={
+    cod: this.createMant.value.cod,
+    fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
+    fecha: {
+      dia: arrFecha[0],
+      mes: arrFecha[1],
+      anio: arrFecha[2]
+    },
+    accion:{
+      archivos:this.createMant.value.archivos,
+      registro:this.createMant.value.registro,
+      malware:this.createMant.value.malware,
+      updates:this.createMant.value.updates,
+      other: other,
+    }
+  }
+  //
     this.toastr.success(mant.cod);
     this.loading = true;
     this._mantenimientosService

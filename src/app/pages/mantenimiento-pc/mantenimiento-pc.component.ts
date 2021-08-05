@@ -134,7 +134,22 @@ export class MantenimientoPcComponent implements OnInit {
   }
 
   editarMantenimiento(id:string){
-    this.toastr.error('actualizar datos de id_mant: '+id);
+    // this.toastr.error('actualizar datos de id_mant: '+id);
+    const mant:any = this.generarData();
+    this.loading = true;
+    this._mantenimientosService
+        .agregarMantenimiento(mant)
+        .then(() => {
+          this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
+          this.loading = false;
+          this.router.navigate(['/historial-mant']);
+
+
+        })
+        .catch(error => {
+          this.toastr.error("catch agregarMantenimiento()");
+          this.loading = false;
+        })
     // console.log('actualizar datos de id_mant: '+id);
   }
 

@@ -61,7 +61,8 @@ export class MantenimientoPcComponent implements OnInit {
 
     const mant:any={
       cod: this.createMant.value.cod,
-      fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
+      fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+      // fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
       fecha: {
         dia: arrFecha[0],
         mes: arrFecha[1],
@@ -113,32 +114,45 @@ export class MantenimientoPcComponent implements OnInit {
   agregarMantenimiento(){
     // const mant:any = this.generarData();
 
-  //  
-  const fecha = this.createMant.value.fecha;
-  const arrFecha = fecha.split('/')
+/* */  
+    const fecha = this.createMant.value.fecha;
+    const arrFecha = fecha.split('/')
 
-  var other:string = this.createMant.value.other;
-  if(other != ''){
-    other = other.replace(/\n/g, "<br />");
-  }
-
-  const mant:any={
-    cod: this.createMant.value.cod,
-    // fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
-    // fecha: {
-    //   dia: arrFecha[0],
-    //   mes: arrFecha[1],
-    //   anio: arrFecha[2]
-    // },
-    accion:{
-      archivos:this.createMant.value.archivos,
-      registro:this.createMant.value.registro,
-      malware:this.createMant.value.malware,
-      updates:this.createMant.value.updates,
-      other: other,
+    var other:string = this.createMant.value.other;
+    if(other != ''){
+      other = other.replace(/\n/g, "<br />");
     }
-  }
-  //
+
+    // // new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arr18T15:00:48'.replace(/\s/, 'T'));
+    console.log('array',(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00').replace(' ', 'T'));
+    console.log('string','2021-08-05T00:00:00')
+    // var fUnix= new Date(arrFecha[2]+'-0'+arrFecha[1]+'-0'+arrFecha[0]+' 00:00:00'.replace(' ', 'T'));
+    // console.log('funix',fUnix);
+
+    const mant:any={
+      cod: this.createMant.value.cod,
+      fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+      // fUnix2: new Date('2021-08-05 00:00:00'),
+      // fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+'T00:00:00'),
+      fecha: {
+        dia: arrFecha[0],
+        mes: arrFecha[1],
+        anio: arrFecha[2]
+      },
+      accion:{
+        archivos:this.createMant.value.archivos,
+        registro:this.createMant.value.registro,
+        malware:this.createMant.value.malware,
+        updates:this.createMant.value.updates,
+        other: other,
+      }
+    }
+
+    console.log(mant);
+/* */
+
+
+
     this.toastr.success(mant.cod);
     this.loading = true;
     this._mantenimientosService

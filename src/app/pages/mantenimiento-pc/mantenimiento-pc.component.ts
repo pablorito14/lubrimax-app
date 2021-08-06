@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { DatepickerComponent } from 'src/app/components/datepicker/datepicker.component';
 import { MantenimientosService } from '../../services/mantenimientos.service';
+// import { DatepickerComponent } from '../../components/datepicker';
+import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 
 @Component({
   selector: 'app-mantenimiento-pc',
@@ -14,12 +17,14 @@ export class MantenimientoPcComponent implements OnInit {
   id_pc:string | null;
   createMant:FormGroup;
   fechaActual:Date = new Date();
+  // fechaActual2:Date = new Date();
   loading:boolean = false;
   submitted:boolean = false;
   validTareas:boolean = true;
   validCompu:boolean = false;
   titulo:string = 'Agregar mantenimiento';
-
+  @ViewChild(DatepickerComponent)
+  hijo!: DatepickerComponent;
 
   constructor(
       private fb:FormBuilder,
@@ -28,7 +33,6 @@ export class MantenimientoPcComponent implements OnInit {
       private toastr:ToastrService,
       private aRoute:ActivatedRoute
     ) { 
-      // this.id_pc = this.aRoute.snapshot.paramMap.get('id'); 
       this.id_pc = this.aRoute.snapshot.paramMap.get('id'); 
       this.createMant = this.fb.group({
 
@@ -42,32 +46,32 @@ export class MantenimientoPcComponent implements OnInit {
         updates: [false],
         other: [''],
       });
-      // this.id_pc = this.aRoute.snapshot.paramMap.get('id'); 
       this.id_mant = this.aRoute.snapshot.paramMap.get('mant');
+      
     }
 
   ngOnInit(): void {
+    
     this.editar();
   }
 
   generarData(){
-    const fecha = this.createMant.value.fecha;
+    const fecha = this.createMant.value.fecha;// formato Date cuando recibe un dato
+
+    // console.log(fecha.getDate());
+
+    // console.log('12 - '+fecha);
     const arrFecha = fecha.split('/')
 
     var other:string = this.createMant.value.other;
     if(other != ''){
       other = other.replace(/\n/g, "<br />");
     }
-
+    // cambiar array si la accion es editar
     const mant:any={
       cod: this.createMant.value.cod,
       fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
-      // fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00'),
-      fecha: {
-        dia: arrFecha[0],
-        mes: arrFecha[1],
-        anio: arrFecha[2]
-      },
+      fechaCreacion: new Date(),
       accion:{
         archivos:this.createMant.value.archivos,
         registro:this.createMant.value.registro,
@@ -76,8 +80,7 @@ export class MantenimientoPcComponent implements OnInit {
         other: other,
       }
     }
-    // console.log(mant);
-    // formatoDDMMMYYYY(fecha);
+
     return mant;
   }
 
@@ -112,46 +115,7 @@ export class MantenimientoPcComponent implements OnInit {
 
 
   agregarMantenimiento(){
-    // const mant:any = this.generarData();
-
-/* */  
-    const fecha = this.createMant.value.fecha;
-    const arrFecha = fecha.split('/')
-
-    var other:string = this.createMant.value.other;
-    if(other != ''){
-      other = other.replace(/\n/g, "<br />");
-    }
-
-    // // new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arr18T15:00:48'.replace(/\s/, 'T'));
-    console.log('array',(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+' 00:00:00').replace(' ', 'T'));
-    console.log('string','2021-08-05T00:00:00')
-    // var fUnix= new Date(arrFecha[2]+'-0'+arrFecha[1]+'-0'+arrFecha[0]+' 00:00:00'.replace(' ', 'T'));
-    // console.log('funix',fUnix);
-
-    const mant:any={
-      cod: this.createMant.value.cod,
-      fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
-      // fUnix2: new Date('2021-08-05 00:00:00'),
-      // fUnix: new Date(arrFecha[2]+'-'+arrFecha[1]+'-'+arrFecha[0]+'T00:00:00'),
-      fecha: {
-        dia: arrFecha[0],
-        mes: arrFecha[1],
-        anio: arrFecha[2]
-      },
-      accion:{
-        archivos:this.createMant.value.archivos,
-        registro:this.createMant.value.registro,
-        malware:this.createMant.value.malware,
-        updates:this.createMant.value.updates,
-        other: other,
-      }
-    }
-
-    console.log(mant);
-/* */
-
-
+    const mant:any = this.generarData();
 
     this.toastr.success(mant.cod);
     this.loading = true;
@@ -175,9 +139,9 @@ export class MantenimientoPcComponent implements OnInit {
     const mant:any = this.generarData();
     this.loading = true;
     this._mantenimientosService
-        .agregarMantenimiento(mant)
+        .editarMantenimiento(mant,id)
         .then(() => {
-          this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
+          this.toastr.success("Mantenimiento Actualizado");
           this.loading = false;
           this.router.navigate(['/historial-mant']);
 
@@ -192,9 +156,33 @@ export class MantenimientoPcComponent implements OnInit {
 
   editar(){
     if(this.id_mant !== null){
+      // console.log('4 - '+this.fechaActual2);
       this.titulo = "Editar mantenimiento";
-      this.toastr.error('Cargar datos de id_mant: '+this.aRoute.snapshot.paramMap.get('mant'));
-      // console.log('buscar datos en la bd');
+      this._mantenimientosService.getMantenimiento(this.id_mant)
+          .subscribe(data => {
+            let arrData = data.payload.data();
+            var fechaMant = new Date(arrData['fUnix']['seconds']*1000);
+            
+            this.hijo.setFecha(
+              new Date(
+                fechaMant.getFullYear(),
+                fechaMant.getMonth(),
+                fechaMant.getDate(),
+                0,0,0
+                )
+              );
+            this.createMant.setValue({
+              cod: arrData['cod'],
+              fecha: fechaMant.getDate()
+                +'/'+(fechaMant.getMonth()+1)
+                +'/'+fechaMant.getFullYear(),
+              archivos: arrData['accion']['archivos'],
+              registro: arrData['accion']['registro'],
+              malware: arrData['accion']['malware'],
+              updates: arrData['accion']['updates'],
+              other: arrData['accion']['other'].replace('<br />','\n')
+            })
+          })
     }
   }
 

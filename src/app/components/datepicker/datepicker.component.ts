@@ -29,6 +29,10 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   onChange = (_:any) => {};
   onTouch = () => {};
   // isDisabled: boolean = false;
+  // @Input()
+  //   fechaActual2: Date | null | undefined;
+
+
 
   constructor(private bsConfig:BsDatepickerConfig,
               private localeService:BsLocaleService){
@@ -40,16 +44,24 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     
     defineLocale('es', esLocale);
     this.localeService.use('es');
-    
+    // this.test='';
+
     this.fecha =  this.fechaActual.getDate()
               +'/'+(this.fechaActual.getMonth()+1)
               +'/'+this.fechaActual.getFullYear();
-    // console.log(this.fecha);
+    // console.log(this.fechaActual2);
+    // console.log(this.test);
     this.cambiarFecha(this.fecha);
   }
   
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
+
+  setFecha(fecha:Date){
+    this.fechaActual = fecha;
+    this.cambiarFecha(this.fechaActual.getDate()+'/'+(this.fechaActual.getMonth()+1)+'/'+this.fechaActual.getFullYear());
+  }
   
   cambiarFecha(value:string):void{
     if(value){

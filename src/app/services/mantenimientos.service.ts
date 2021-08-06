@@ -17,6 +17,14 @@ export class MantenimientosService {
         .add(mantenimiento);
   }
 
+  editarMantenimiento(mant:any,id:string):Promise<any>{
+    return this.firestore.collection('mantenimientos').doc(id).update(mant);
+  }
+
+  getMantenimiento(id:string):Observable<any>{
+    return this.firestore.collection('mantenimientos').doc(id).snapshotChanges();
+  }
+
   getMantenimientos():Observable<any>{
     
     return this.firestore

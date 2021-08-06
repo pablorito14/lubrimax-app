@@ -1,14 +1,14 @@
-import { formatoDDMMMYYYY } from '../helpers/formatos-fecha';
-import { LOCALE_ID, NgModule } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs);
 
-export const listadoMantenimientos = (data:any,filter?:string) => {
+export const listadoMantenimientos = (data:any) => {
   var mantenimientos:any = [];
   
   data.forEach((element:any) => {
-    
+    // console.log(element.payload.doc.id);
+    // console.log(element.payload.doc.data().fUnix.seconds);
+      
     var strTareas:string='';
     var strOthers:string=' -- ';
 
@@ -39,14 +39,13 @@ export const listadoMantenimientos = (data:any,filter?:string) => {
     } 
     
     mantenimientos.push({
-      // fecha : new Date(mant.fecha.anio,(mant.fecha.mes),(mant.fecha.dia)),
       id:element.payload.doc.id,
-      fecha2 : new Date(),
-      fecha : formatoDDMMMYYYY(mant.fecha.dia,mant.fecha.mes,mant.fecha.anio),
+      fecha: new Date(element.payload.doc.data().fUnix.seconds*1000),
       computadora: mant.cod,
       nombre: nombre,
       tareas: strTareas,
       other: strOthers
+
     });
   });
   return mantenimientos;

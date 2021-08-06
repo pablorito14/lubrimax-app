@@ -13,9 +13,9 @@ export class HeaderComponent implements OnInit {
   }
 
   cerrarMenu(){
-    console.log('cerrar menu');
-    var menu = document.getElementById('navbarNavDropdown');
-    console.log(menu);
+    // console.log('cerrar menu');
+    // var menu = document.getElementById('navbarNavDropdown');
+    // menu?.classList.remove('show');
   }
 
 }

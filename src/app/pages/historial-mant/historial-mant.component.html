@@ -51,14 +51,26 @@
         <!-- LISTADO XS -->
         <div class="d-block d-md-none">
           <div class="border-top py-3" *ngFor="let mant of mantenimientos | computadora:filtro">
-            <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+            
+                <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+                  href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
+                  aria-controls="collapse">
+                  <div class="row">
+                    <div class="col-12">
+                      <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
+                      
+                      <span class="float-right"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                  </div>
+                </a>    
+              
+            <!-- <a class="h6 text-secondary text-decoration-none border" data-toggle="collapse"
                 href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
                 aria-controls="collapse">
-                <!-- <span>{{ mant.fecha2 | date:'longDate' }}</span><br> -->
                 <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
                 
                 <span class="float-right"><i class="fas fa-angle-down"></i></span>
-            </a>
+            </a> -->
 
             <div class="collapse" id="mantenimiento-{{ mant.id }}">
               <table class="table table-sm mt-2">

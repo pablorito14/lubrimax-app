@@ -23,6 +23,9 @@ import { ComputadoraPipe } from './pipes/computadora.pipe';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { ListFacturacionesComponent } from './pages/list-facturaciones/list-facturaciones.component';
+import { ListCostosComponent } from './pages/list-costos/list-costos.component';
+
 registerLocaleData(localeEs);
 
 
@@ -38,7 +41,9 @@ registerLocaleData(localeEs);
     InputComponent,
     DesplegablePcComponent,
     BackButtonComponent,
-    ComputadoraPipe
+    ComputadoraPipe,
+    ListFacturacionesComponent,
+    ListCostosComponent
   ],
   imports: [
     BrowserModule,

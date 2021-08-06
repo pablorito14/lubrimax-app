@@ -17,14 +17,15 @@ export class MantenimientoPcComponent implements OnInit {
   id_pc:string | null;
   createMant:FormGroup;
   fechaActual:Date = new Date();
-  // fechaActual2:Date = new Date();
+  
   loading:boolean = false;
   submitted:boolean = false;
   validTareas:boolean = true;
   validCompu:boolean = false;
   titulo:string = 'Agregar mantenimiento';
+  
   @ViewChild(DatepickerComponent)
-  hijo!: DatepickerComponent;
+  dtp!: DatepickerComponent;
 
   constructor(
       private fb:FormBuilder,
@@ -58,26 +59,39 @@ export class MantenimientoPcComponent implements OnInit {
   generarData(){
     const fecha = this.createMant.value.fecha;// formato Date cuando recibe un dato
 
-    // console.log(fecha.getDate());
-
-    // console.log('12 - '+fecha);
     const arrFecha = fecha.split('/')
 
     var other:string = this.createMant.value.other;
     if(other != ''){
       other = other.replace(/\n/g, "<br />");
     }
-    // cambiar array si la accion es editar
-    const mant:any={
-      cod: this.createMant.value.cod,
-      fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
-      fechaCreacion: new Date(),
-      accion:{
-        archivos:this.createMant.value.archivos,
-        registro:this.createMant.value.registro,
-        malware:this.createMant.value.malware,
-        updates:this.createMant.value.updates,
-        other: other,
+    
+    var mant:any={}
+    
+    if(this.id_mant === null){
+      mant = {
+        cod: this.createMant.value.cod,
+        fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+        fechaCreacion: new Date(),
+        accion:{
+          archivos:this.createMant.value.archivos,
+          registro:this.createMant.value.registro,
+          malware:this.createMant.value.malware,
+          updates:this.createMant.value.updates,
+          other: other,
+        }
+      }
+    } else {
+      mant = {
+        cod: this.createMant.value.cod,
+        fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+        accion:{
+          archivos:this.createMant.value.archivos,
+          registro:this.createMant.value.registro,
+          malware:this.createMant.value.malware,
+          updates:this.createMant.value.updates,
+          other: other,
+        }
       }
     }
 
@@ -117,7 +131,6 @@ export class MantenimientoPcComponent implements OnInit {
   agregarMantenimiento(){
     const mant:any = this.generarData();
 
-    this.toastr.success(mant.cod);
     this.loading = true;
     this._mantenimientosService
         .agregarMantenimiento(mant)
@@ -163,7 +176,7 @@ export class MantenimientoPcComponent implements OnInit {
             let arrData = data.payload.data();
             var fechaMant = new Date(arrData['fUnix']['seconds']*1000);
             
-            this.hijo.setFecha(
+            this.dtp.setFecha(
               new Date(
                 fechaMant.getFullYear(),
                 fechaMant.getMonth(),

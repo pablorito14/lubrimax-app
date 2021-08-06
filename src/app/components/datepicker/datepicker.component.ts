@@ -7,7 +7,6 @@ import { esLocale } from 'ngx-bootstrap/locale';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 
 import { ControlValueAccessor,NG_VALUE_ACCESSOR } from '@angular/forms';
-import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 
 @Component({
   selector: 'app-datepicker',
@@ -57,6 +56,8 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
   }
+
+  
 
   setFecha(fecha:Date){
     this.fechaActual = fecha;

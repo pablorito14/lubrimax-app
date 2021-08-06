@@ -8,14 +8,14 @@
         </p>
         <div class="row my-3">
           <div class="col-12 col-md text-center text-md-left">
-            <buttom class="btn btn-dark mb-3 mb-md-0" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
+            <buttom class="btn btn-info mb-3 mb-md-0" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
           </div>
 
           <div class="col-12 col-md text-center text-md-right ">
             <div class="btn-group" role="group">
               
               <button type="button" (click)="resetearTable()"
-                class="btn btn-outline-dark px-2">Mostrar todo</button>
+                class="btn btn-secondary px-2">Mostrar todo</button>
               <form [formGroup]="formFiltro">
                 <app-desplegable-pc 
                   formControlName="filtro" 

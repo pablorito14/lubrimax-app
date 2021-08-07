@@ -1,20 +1,12 @@
 <div class="row justify-content-center">
   <div class="col-md-8">
-    <div class="card shadow">
+    <div class="card shadow mb-3">
       <div class="card-body">
         <h4 class="text-center">{{ titulo }}</h4>
 
         <form [formGroup]="createMant" (ngSubmit)="agregarEditarMant()">
-          <div class="row justify-content-center mt-3">
-            <div class="col-12 text-center">
-              <span class="alert alert-danger text-center p-1" *ngIf="submitted && createMant.invalid">Elegi una computadora</span>
-            </div>
-            
-            <div class="col-12 text-center">
-              <span class="alert alert-danger text-center p-1" *ngIf="submitted && !validTareas">Elegi al menos una tarea realizada</span>
-            </div>
-            
-          </div>
+          <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && createMant.invalid">Elegi una computadora</div>
+          <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && !validTareas">Elegi al menos una tarea realizada</div>
           <div class="row my-3">
             <div class="col-12 col-md-5">
               <label>Computadora</label>

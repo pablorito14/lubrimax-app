@@ -29,7 +29,6 @@
         <div class="d-none d-md-block">
           <table class="table table-sm">
             <tr>
-              <th>ID</th>
               <th>Fecha</th>
               <th>Computadora</th>
               <th>Tareas estandar realizadas</th>
@@ -37,7 +36,6 @@
               <th></th>
             </tr>
             <tr *ngFor="let mant of mantenimientos | computadora:filtro">
-              <td>{{ mant.id }}</td>
               <td>{{ mant.fecha | date:'longDate' }}</td>
               <td>{{ mant.nombre }}</td>
               <td [innerHTML]="mant.tareas"></td>

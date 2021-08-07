@@ -167,6 +167,11 @@ export class MantenimientoPcComponent implements OnInit {
     // console.log('actualizar datos de id_mant: '+id);
   }
 
+  eliminarMantenimiento(id:string){
+    // this.loading = true;
+    console.log('eliminar mantenimiento: '+id);
+  }
+
   editar(){
     if(this.id_mant !== null){
       // console.log('4 - '+this.fechaActual2);

@@ -23,14 +23,16 @@ export class InicioComponent implements OnInit {
       this.computadoras = [];
 
       data.forEach((element:any) => {
+        
         this.computadoras.push({
           id:element.payload.doc.id,
+          uMant:new Date(element.payload.doc.data().ultimoMant.seconds*1000),
           ...element.payload.doc.data()
         });
       });
       this.loading = false;
       
-      
+      // console.log(this.computadoras);
     });
   }
 

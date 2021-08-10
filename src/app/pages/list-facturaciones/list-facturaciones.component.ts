@@ -10,6 +10,10 @@ export class ListFacturacionesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    setTimeout(() => {
+      this.loading = false;
+    }, 3000);
   }
 
 }

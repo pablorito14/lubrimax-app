@@ -35,7 +35,7 @@
                 
               </div>
               <div class="col-6 col-md mb-2 px-1">
-                <input type="text" class="form-control" placeholder="Valor"
+                <input type="number" class="form-control" placeholder="Valor"
                     formControlName="valor">
               </div>
               <div class="col-6 col-md px-md-1 text-center">
@@ -91,12 +91,12 @@
           </div>
           <!-- LISTADO XS -->
           <div *ngIf="ctaCte.length > 0" class="d-block d-md-none">
-            <div class="border-top py-3" *ngFor="let c of ctaCte">
+            <div class="border-top" *ngFor="let c of ctaCte">
               
-              <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+              <a class="h6 text-dark text-decoration-none" data-toggle="collapse"
                 href="#costo-{{ c.id }}" role="button" aria-expanded="false"
                 aria-controls="collapse">
-                <div class="row">
+                <div class="row py-4">
                   <div class="col-12">
                     <span>{{ c.fecha | date:'longDate' }} | {{ c.computadora | uppercase }}</span>
                     

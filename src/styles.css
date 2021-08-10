@@ -1,13 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~ngx-toastr/toastr';
+/* 
+  colores lubrimax
+  azul: #1E376D
+  rojo: #D7191E 
+*/
 
 body{
   background: #0099F7;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #F11712, #0099F7);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #F11712, #0099F7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to right, #D7191E, #1E376D);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #D7191E, #1E376D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   /* height: 100vh; */
   overflow-y: scroll;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+input[type=number] { -moz-appearance:textfield; }
+
 
 .animated {
   -webkit-animation-duration: 0.6s;

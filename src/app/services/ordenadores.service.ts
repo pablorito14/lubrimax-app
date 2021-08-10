@@ -33,4 +33,12 @@ export class OrdenadoresService {
     return this.firestore.collection('ordenadores', ref => ref.where('estado','==',true).where('teamviewer','==',teamviewer)).get();
     // return this.firestore.collection('ordenadores').snapshotChanges();
   }
+
+  buscarOrdenador(cod:string):Observable<any>{
+    return this.firestore.collection('ordenadores',ref => ref.where('cod','==',cod)).get();
+  }
+
+  actUltimoMant(id:string,ultimoMant:Date):Promise<any>{
+    return this.firestore.collection('ordenadores').doc(id).update({'ultimoMant':ultimoMant});
+  }
 }

@@ -6,6 +6,7 @@ import { DatepickerComponent } from 'src/app/components/datepicker/datepicker.co
 import { MantenimientosService } from '../../services/mantenimientos.service';
 // import { DatepickerComponent } from '../../components/datepicker';
 import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
+import { OrdenadoresService } from '../../services/ordenadores.service';
 
 @Component({
   selector: 'app-mantenimiento-pc',
@@ -22,7 +23,6 @@ export class MantenimientoPcComponent implements OnInit {
   
   submitted:boolean = false;
   validTareas:boolean = true;
-  validCompu:boolean = false;
   titulo:string = 'Agregar mantenimiento';
   
   @ViewChild(DatepickerComponent)
@@ -31,13 +31,13 @@ export class MantenimientoPcComponent implements OnInit {
   constructor(
       private fb:FormBuilder,
       private _mantenimientosService:MantenimientosService,
+      private _ordenadoresService:OrdenadoresService,
       private router:Router,
       private toastr:ToastrService,
       private aRoute:ActivatedRoute
     ) { 
       this.id_pc = this.aRoute.snapshot.paramMap.get('id'); 
       this.createMant = this.fb.group({
-
         cod: [this.id_pc,Validators.required],
         fecha: this.fechaActual.getDate()
                 +'/'+(this.fechaActual.getMonth()+1)
@@ -53,13 +53,11 @@ export class MantenimientoPcComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.toastr.warning('actualizar fecha de ultimo mantenimiento a la pc');
     this.editar();
   }
 
   generarData(){
-    const fecha = this.createMant.value.fecha;// formato Date cuando recibe un dato
-
+    const fecha = this.createMant.value.fecha;
     const arrFecha = fecha.split('/')
 
     var other:string = this.createMant.value.other;
@@ -131,30 +129,32 @@ export class MantenimientoPcComponent implements OnInit {
 
   agregarMantenimiento(){
     const mant:any = this.generarData();
-
+    
     this.loading = true;
     this._mantenimientosService
-        .agregarMantenimiento(mant)
-        .then(() => {
-          // this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
-          // this.loading = false;
-          // this.router.navigate(['/historial-mant']);
-          this._mantenimientosService.agregarMantenimiento(mant)
-              .then(() => {
-                this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
-                this.loading = false;
-                this.router.navigate(['/historial-mant']);
-              })
-              .catch(error => {
-                this.toastr.error("catch agregarMantenimiento()");
-                this.loading = false;      
-              })
-
-        })
-        .catch(error => {
-          this.toastr.error("catch agregarMantenimiento()");
-          this.loading = false;
-        })
+      .agregarMantenimiento(mant)
+      .then(() => {
+          this._ordenadoresService
+          .buscarOrdenador(mant.cod)
+          .subscribe(data => {
+            // console.log(data.docs[0].id);
+            this._ordenadoresService
+                .actUltimoMant(data.docs[0].id,mant.fUnix)
+                .then(() => {
+                  this.toastr.success("Mantenimiento agregado");
+                  this.loading = false;
+                  this.router.navigate(['/historial-mant']);
+                })
+                .catch(error => {
+                  this.toastr.error(error);
+                  this.loading = false;   
+                });
+          });
+      })
+      .catch(error => {
+        this.toastr.error("catch agregarMantenimiento()");
+        this.loading = false;
+      });
   }
 
   editarMantenimiento(id:string){
@@ -164,9 +164,22 @@ export class MantenimientoPcComponent implements OnInit {
     this._mantenimientosService
         .editarMantenimiento(mant,id)
         .then(() => {
-          this.toastr.success("Mantenimiento Actualizado");
-          this.loading = false;
-          this.router.navigate(['/historial-mant']);
+          this._ordenadoresService
+          .buscarOrdenador(mant.cod)
+          .subscribe(data => {
+            // console.log(data.docs[0].id);
+            this._ordenadoresService
+                .actUltimoMant(data.docs[0].id,mant.fUnix)
+                .then(() => {
+                  this.toastr.success("Mantenimiento actualizado");
+                  this.loading = false;
+                  this.router.navigate(['/historial-mant']);
+                })
+                .catch(error => {
+                  this.toastr.error(error);
+                  this.loading = false;   
+                });
+          });
         })
         .catch(error => {
           this.toastr.error("catch agregarMantenimiento()");

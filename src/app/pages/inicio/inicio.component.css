@@ -1,3 +1,11 @@
 .fa-plus-circle{
   cursor: pointer;
 }
+
+.add-comp, .title{
+  cursor: pointer;
+}
+
+.bg-disabled{
+  background-color: rgb(192, 190, 194);
+}

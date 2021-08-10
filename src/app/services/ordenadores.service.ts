@@ -14,7 +14,11 @@ export class OrdenadoresService {
   }
 
   getComputadoras():Observable<any>{
-    return this.firestore.collection('ordenadores', ref => ref.orderBy('teamviewer','desc')).snapshotChanges();
+    return this.firestore.collection('ordenadores', ref => ref.orderBy('estado','desc').orderBy('teamviewer','desc')).snapshotChanges();
+  }
+
+  getComputadorasActivas():Observable<any>{
+    return this.firestore.collection('ordenadores', ref => ref.where('estado','==',true).orderBy('teamviewer','desc')).snapshotChanges();
   }
 
   getComputadora(id:string):Observable<any>{
@@ -23,5 +27,10 @@ export class OrdenadoresService {
 
   actualizarOrdenador(id:string,data:any){
     return this.firestore.collection('ordenadores').doc(id).update(data);
+  }
+
+  compUnique(teamviewer:string):Observable<any>{
+    return this.firestore.collection('ordenadores', ref => ref.where('estado','==',true).where('teamviewer','==',teamviewer)).get();
+    // return this.firestore.collection('ordenadores').snapshotChanges();
   }
 }

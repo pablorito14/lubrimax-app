@@ -1,0 +1,135 @@
+<div class="text-center" *ngIf="loading">
+  <span class="h4 text-light mr-2">Cargando</span>
+  <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+</div>
+
+<div *ngIf="!loading" class="animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <p class="h5 text-center mb-3">
+            Agregar costo
+          </p>
+          <form [formGroup]="createCosto" (ngSubmit)="agregarCosto()">
+            <div class="row justify-content-center">
+              <div class="col-12 px-1">
+                <div *ngIf="submitted && createCosto.invalid" 
+                    class="alert alert-danger p-1 text-center">Todos los campos son requeridos</div>
+              </div>
+              <div class="col-6 col-md mb-2 px-1">
+                <app-datepicker formControlName="fecha"
+                    ></app-datepicker>
+              </div>
+              <div class="col-6 col-md mb-2 px-1">
+                <app-desplegable-pc formControlName="computadora"></app-desplegable-pc>
+              </div>
+              <div class="col-6 col-md mb-2 px-1">
+                <select class="form-control" formControlName="concepto" #conc (change)="cambiarConc(conc.value)">
+                  <option value="" [disabled]="concValid">Concepto</option>
+                  <option *ngFor="let c of arrConceptos" value="{{ c }}">{{ c }}</option>
+                  
+                  <option value="transferencia">Transferencia</option>
+                  <option value="chequeElec">Cheque Elec.</option>
+                </select>
+                
+              </div>
+              <div class="col-6 col-md mb-2 px-1">
+                <input type="text" class="form-control" placeholder="Valor"
+                    formControlName="valor">
+              </div>
+              <div class="col-6 col-md px-md-1 text-center">
+                <button type="submit" [disabled]="submitted" class="btn btn-info btn-block">
+                  Guardar <i *ngIf="submitted" class="fas fa-spinner fa-spin"></i>
+                </button>
+              </div>
+              
+            </div> 
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading" class="animated fadeIn">
+  <div class="row justify-content-center">
+      
+    <div class="col-12">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <p class="h5 text-center">
+            Cuenta Corriente<span *ngIf="ctaCte.length > 0">: {{ vCtaCte | currency:'ARS':'symbol':'1.0-0'}}</span>
+          </p>
+          <!-- TABLA MD -->
+          <div *ngIf="ctaCte.length == 0" class="alert alert-warning p-2 text-center">La cuenta corriente esta vacia</div>
+          <div *ngIf="ctaCte.length > 0" class="d-none d-md-block">
+            
+            <table class="table table-sm">
+              <tr>
+                <th>Fecha</th>
+                <th>Observaciones</th>
+                <th>Concepto</th>
+                <th class="text-right">Precio</th>
+                <th></th>
+              </tr>
+              
+              <tr *ngFor="let c of ctaCte">
+                <td>{{ c.fecha | date:'longDate' }}</td>
+                <!-- <td>12 de Julio, 2021</td> -->
+                <td>{{ c.computadora | uppercase}}</td>
+                <td>{{ c.concepto }}</td>
+                <td class="text-right">{{ c.valor | currency:'ARS':'symbol':'1.0-0' }}</td>
+                <!-- <td><a [routerLink]="['/editar-mantenimiento/']">Editar</a></td> -->
+                <td class="text-right">
+                  <i *ngIf="deleting && c.id == id_deleting" class="fas fa-spinner fa-spin"></i>
+                  <i *ngIf="!deleting || c.id != id_deleting" (click)="eliminarCosto(c.id)" class="fas fa-trash-alt fa-lg text-danger"></i></td>
+              </tr>      
+            </table>
+            
+            
+          </div>
+          <!-- LISTADO XS -->
+          <div *ngIf="ctaCte.length > 0" class="d-block d-md-none">
+            <div class="border-top py-3" *ngFor="let c of ctaCte">
+              
+              <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+                href="#costo-{{ c.id }}" role="button" aria-expanded="false"
+                aria-controls="collapse">
+                <div class="row">
+                  <div class="col-12">
+                    <span>{{ c.fecha | date:'longDate' }} | {{ c.computadora | uppercase }}</span>
+                    
+                    <span class="float-right"><i class="fas fa-angle-down"></i></span>
+                  </div>
+                </div>
+              </a>    
+              <div class="collapse" id="costo-{{ c.id }}">
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <th>Concepto</th>
+                    <td>{{ c.concepto }}</td>
+                  </tr>
+                  <tr>
+                    <th>Precio</th>
+                    <td>{{ c.valor | currency:'ARS':'symbol':'1.0-0' }}</td>
+                  </tr>
+                </table>
+
+                <div class="text-center">
+                  <a class="btn btn-danger btn-block" (click)="eliminarCosto(c.id)">
+                    Eliminar
+                    <i *ngIf="deleting && c.id == id_deleting" class="fas fa-spinner fa-spin"></i>
+                  </a>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+

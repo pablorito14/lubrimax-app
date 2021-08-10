@@ -1,1 +1,64 @@
-<p>list-costos works!</p>
+<!-- <div class="text-center">
+  <span class="h4 text-light mr-2">Cargando</span>
+  <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+</div> -->
+
+<!-- <div class="animated fadeIn"> -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-4">
+      <div class="card shadow mb-3 animated fadeIn">
+        <div class="card-body">
+          <p class="h5">Lista de precios 
+            <button class="btn btn-info btn-sm float-right mb-2" (click)="habilitarEditar()">Agregar</button>
+          </p>
+          
+          <table class="table borderless">
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                <th class="text-right">Valor</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of conceptos">
+                <td>{{ c.concepto }}</td>
+                <td class="text-right">{{ c.valor | currency: 'ARS':'symbol':'2.0-0'}}</td>
+                <td class="text-right"><i class="fas fa-edit fa-lg text-info" (click)="habilitarEditar(c.id)"></i></td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card shador mb-3 animated fadeIn" *ngIf="editing">
+        <div class="card-body">
+          <p class="h5 mb-3">{{ title }} </p>
+          <form [formGroup]="createConcepto" (ngSubmit)="guardarEditarConcepto()">
+            <input type="hidden" 
+                    formControlName="id">
+            <div class="form-group">
+              <label for="">Concepto</label>
+              <input type="text" class="form-control"
+                    formControlName="concepto">
+            </div>
+
+            <div class="form-group">
+              <label for="">Valor</label>
+              <input type="text" class="form-control"
+                    formControlName="valor">
+            </div>
+            <div class="text-center">
+              <button type="submit" [disabled]="loading" class="btn btn-info">
+                Guardar 
+                <i *ngIf="loading" class="fas fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->

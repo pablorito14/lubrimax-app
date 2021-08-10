@@ -1,1 +1,7 @@
-<p>list-facturaciones works!</p>
+<div class="text-center" *ngIf="loading">
+  <span class="h4 text-light mr-2">Cargando</span>
+  <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+</div>
+
+<div *ngIf="!loading" class="animated animate__bounceInDown">
+</div>

@@ -16,6 +16,7 @@ export class HistorialMantComponent implements OnInit {
   mantenimientos:any[]=[];
   formFiltro:FormGroup;
   filtro :string = ''; 
+  loading:boolean = true;
 
   constructor(private _mantenimientosService:MantenimientosService,
               private fb:FormBuilder,
@@ -45,7 +46,7 @@ export class HistorialMantComponent implements OnInit {
     this._mantenimientosService.getMantenimientos()
         .subscribe(data => {
           this.mantenimientos = listadoMantenimientos(data);
-          
+          this.loading = false;
     });
     
   }

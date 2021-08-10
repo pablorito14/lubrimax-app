@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-facturaciones.component.css']
 })
 export class ListFacturacionesComponent implements OnInit {
-
+  loading:boolean = true;
   constructor() { }
 
   ngOnInit(): void {

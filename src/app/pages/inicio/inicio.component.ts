@@ -8,6 +8,7 @@ import { OrdenadoresService } from 'src/app/services/ordenadores.service';
 })
 export class InicioComponent implements OnInit {
   computadoras:any[] = [];
+  loading:boolean = true;
   
   constructor(private _ordenadoresService:OrdenadoresService) {
     
@@ -27,7 +28,8 @@ export class InicioComponent implements OnInit {
           ...element.payload.doc.data()
         });
       });
-      // console.log(this.computadoras);
+      this.loading = false;
+      
       
     });
   }

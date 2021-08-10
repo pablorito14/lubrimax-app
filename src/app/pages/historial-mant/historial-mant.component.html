@@ -1,97 +1,104 @@
-<div class="row justify-content-center">
-    
-  <div class="col-12">
-    <div class="card shadow mb-3">
-      <div class="card-body">
-        <p class="h5 text-center">
-          Listado de mantenimientos
-        </p>
-        <div class="row my-3">
-          <div class="col-12 col-md text-center text-md-left">
-            <buttom class="btn btn-info mb-3 mb-md-0" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
-          </div>
+<div class="text-center" *ngIf="loading">
+  <span class="h4 text-light mr-2">Cargando</span>
+  <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+</div>
 
-          <div class="col-12 col-md text-center text-md-right ">
-            <div class="btn-group" role="group">
-              
-              <button type="button" (click)="resetearTable()"
-                class="btn btn-secondary px-2">Mostrar todo</button>
-              <form [formGroup]="formFiltro">
-                <app-desplegable-pc 
-                  formControlName="filtro" 
-                  (change)="filtrarResultados()" >
-                </app-desplegable-pc>
-            </form>
+<div *ngIf="!loading" class="animated fadeIn">
+  <div class="row justify-content-center">
+      
+    <div class="col-12">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <p class="h5 text-center">
+            Listado de mantenimientos
+          </p>
+          <div class="row my-3">
+            <div class="col-12 col-md text-center text-md-left">
+              <buttom class="btn btn-info mb-3 mb-md-0" [routerLink]="['/agregar-mantenimiento']">Agregar mantenimiento</buttom>
+            </div>
+
+            <div class="col-12 col-md text-center text-md-right ">
+              <div class="btn-group" role="group">
+                
+                <button type="button" (click)="resetearTable()"
+                  class="btn btn-secondary px-2">Mostrar todo</button>
+                <form [formGroup]="formFiltro">
+                  <app-desplegable-pc 
+                    formControlName="filtro" 
+                    (change)="filtrarResultados()" >
+                  </app-desplegable-pc>
+              </form>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- TABLA MD -->
-        <div class="d-none d-md-block">
-          <table class="table table-sm">
-            <tr>
-              <th>Fecha</th>
-              <th>Computadora</th>
-              <th>Tareas estandar realizadas</th>
-              <th>Otras tareas</th>
-              <th></th>
-            </tr>
-            <tr *ngFor="let mant of mantenimientos | computadora:filtro">
-              <td>{{ mant.fecha | date:'longDate' }}</td>
-              <td>{{ mant.nombre }}</td>
-              <td [innerHTML]="mant.tareas"></td>
-              <td [innerHTML]="mant.other"></td>
-              <td><a [routerLink]="['/editar-mantenimiento/',mant.computadora,mant.id]">Editar</a></td>
-            </tr>      
-          </table>
-          
-          
-        </div>
-        <!-- LISTADO XS -->
-        <div class="d-block d-md-none">
-          <div class="border-top py-3" *ngFor="let mant of mantenimientos | computadora:filtro">
+          <!-- TABLA MD -->
+          <div class="d-none d-md-block">
+            <table class="table table-sm">
+              <tr>
+                <th>Fecha</th>
+                <th>Computadora</th>
+                <th>Tareas estandar realizadas</th>
+                <th>Otras tareas</th>
+                <th></th>
+              </tr>
+              <tr *ngFor="let mant of mantenimientos | computadora:filtro">
+                <td>{{ mant.fecha | date:'longDate' }}</td>
+                <td>{{ mant.nombre }}</td>
+                <td [innerHTML]="mant.tareas"></td>
+                <td [innerHTML]="mant.other"></td>
+                <td><a [routerLink]="['/editar-mantenimiento/',mant.computadora,mant.id]">Editar</a></td>
+              </tr>      
+            </table>
             
-                <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+            
+          </div>
+          <!-- LISTADO XS -->
+          <div class="d-block d-md-none">
+            <div class="border-top py-3" *ngFor="let mant of mantenimientos | computadora:filtro">
+              
+                  <a class="h6 text-secondary text-decoration-none" data-toggle="collapse"
+                    href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
+                    aria-controls="collapse">
+                    <div class="row">
+                      <div class="col-12">
+                        <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
+                        
+                        <span class="float-right"><i class="fas fa-angle-down"></i></span>
+                      </div>
+                    </div>
+                  </a>    
+                
+              <!-- <a class="h6 text-secondary text-decoration-none border" data-toggle="collapse"
                   href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
                   aria-controls="collapse">
-                  <div class="row">
-                    <div class="col-12">
-                      <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
-                      
-                      <span class="float-right"><i class="fas fa-angle-down"></i></span>
-                    </div>
-                  </div>
-                </a>    
-              
-            <!-- <a class="h6 text-secondary text-decoration-none border" data-toggle="collapse"
-                href="#mantenimiento-{{ mant.id }}" role="button" aria-expanded="false"
-                aria-controls="collapse">
-                <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
-                
-                <span class="float-right"><i class="fas fa-angle-down"></i></span>
-            </a> -->
+                  <span>{{ mant.fecha | date:'longDate' }} | {{ mant.nombre }}</span>
+                  
+                  <span class="float-right"><i class="fas fa-angle-down"></i></span>
+              </a> -->
 
-            <div class="collapse" id="mantenimiento-{{ mant.id }}">
-              <table class="table table-sm mt-2">
-                <tr>
-                  <th>Tareas realizadas</th>
-                  <td [innerHTML]="mant.tareas"></td>
-                </tr>
-                <tr>
-                  <th>Tareas adicionales</th>
-                  <td [innerHTML]="mant.other"></td>
-                </tr>
-              </table>
+              <div class="collapse" id="mantenimiento-{{ mant.id }}">
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <th>Tareas realizadas</th>
+                    <td [innerHTML]="mant.tareas"></td>
+                  </tr>
+                  <tr>
+                    <th>Tareas adicionales</th>
+                    <td [innerHTML]="mant.other"></td>
+                  </tr>
+                </table>
 
-              <div class="text-center">
-                <a class="btn btn-info btn-block" [routerLink]="['/editar-mantenimiento/',mant.computadora,mant.id]">Editar</a>
+                <div class="text-center">
+                  <a class="btn btn-info btn-block" [routerLink]="['/editar-mantenimiento/',mant.computadora,mant.id]">Editar</a>
 
-            </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+    
   </div>
-  
-  
 </div>

@@ -1,6 +1,7 @@
 import { Component, forwardRef, OnInit, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OrdenadoresService } from '../../services/ordenadores.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-desplegable-pc',
@@ -23,17 +24,28 @@ export class DesplegablePcComponent implements OnInit,ControlValueAccessor {
   onTouch = () => {};
   @Input()
     computadora: string | null | undefined;
+
+  vista:string;
   
-    constructor(private _ordenadoresService:OrdenadoresService) { }
-  
-  
+  constructor(
+    private _ordenadoresService:OrdenadoresService,
+    private router: Router) {
+      this.vista = this.router.url;
+  }
 
   ngOnInit(): void {
     this.cargarDatos();
-    
     if(this.computadora){
       this.cambiarComp(this.computadora.toString());
     }  
+  }
+
+  resetComp():void{
+    this.compValid = false;
+  }
+
+  setVista(vista:string):void{
+    this.vista=vista;
   }
 
   cambiarComp(value:string):void{
@@ -48,7 +60,6 @@ export class DesplegablePcComponent implements OnInit,ControlValueAccessor {
   writeValue(value:string):void{
     if(value){
       this.pc = value;
-      
     }
   }
   registerOnChange(fn: any): void {

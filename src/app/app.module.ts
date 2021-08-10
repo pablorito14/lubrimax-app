@@ -21,10 +21,11 @@ import { DesplegablePcComponent } from './components/desplegable-pc/desplegable-
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { ComputadoraPipe } from './pipes/computadora.pipe';
 
-import localeEs from '@angular/common/locales/es';
+import localeEs from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
 import { ListFacturacionesComponent } from './pages/list-facturaciones/list-facturaciones.component';
 import { ListCostosComponent } from './pages/list-costos/list-costos.component';
+import { CuentaCorrienteComponent } from './pages/cuenta-corriente/cuenta-corriente.component';
 
 registerLocaleData(localeEs);
 
@@ -43,7 +44,8 @@ registerLocaleData(localeEs);
     BackButtonComponent,
     ComputadoraPipe,
     ListFacturacionesComponent,
-    ListCostosComponent
+    ListCostosComponent,
+    CuentaCorrienteComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,7 @@ registerLocaleData(localeEs);
     BsDatepickerModule.forRoot()
     
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

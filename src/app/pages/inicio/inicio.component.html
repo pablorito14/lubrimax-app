@@ -1,51 +1,67 @@
-  <div class="row justify-content-center">
-    
-    <div *ngFor="let pc of computadoras" class="col-12 col-md-4">
-      <div class="card shadow mb-3">
-        <div class="card-body">
-          <p class="h5 text-center">
-            <a class="text-secondary text-decoration-none" data-toggle="collapse" href="#ordenador-{{ pc.cod }}" role="button" aria-expanded="false" aria-controls="collapse">
-              <i class="fas fa-{{ pc.tipo }}"></i> {{ pc.teamviewer }} <i class="fas fa-angle-down"></i>
-            </a>
-          </p>
-          <div class="collapse" id="ordenador-{{ pc.cod }}">
-            <table class="table table-sm">
-              <tr>
-                <th>Codigo</th>
-                <td>{{ pc.cod }}</td>
-              </tr>            
-              <tr>
-                <th>Nombre Equipo</th>
-                <td>{{ pc.nombre_equipo }}</td>
-              </tr>
-              <tr>
-                <th>IP Fija</th>
-                <td>{{ pc.ip_fija }}</td>
-              </tr>
-              <tr>
-                <th>TeamViewer</th>
-                <td>{{ pc.teamviewer }}</td>
-              </tr>
-              <tr>
-                <th>Ultimo mant.</th>
-                <td></td>
-              </tr>
-            </table>
+  
+  <div class="text-center" *ngIf="loading">
+    <span class="h4 text-light mr-2">Cargando</span>
+    <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+  </div>
+  <div *ngIf="!loading" class="animated fadeIn">
+    <div class="row justify-content-center">
+      
+      <div class="col-12 col-md-4 mb-2" *ngFor="let pc of computadoras">
+        <div class="accordion" id="accordionExample">
+          
+          <div class="card" [ngClass]="{'bg-secondary': !pc.estado}">
+            <div class="card-header p-0" id="heading-{{ pc.cod }}"
+                [ngClass]="{'bg-secondary': !pc.estado}">
+              <span class="btn btn-block p-4" 
+                    data-toggle="collapse" attr.data-target="#collapse-{{ pc.cod }}" 
+                    aria-expanded="true" attr.aria-controls="collapse-{{ pc.cod }}">
+                    <span class="h5 font-weight-bold" [ngClass]="{'text-secondary': pc.estado, 'text-white-50': !pc.estado }">{{ pc.teamviewer }} <i class="fas fa-angle-down"></i></span>
+              </span>
+            </div>
             
-            <div class="text-center">
-              <button class="btn btn-dark mr-2" [routerLink]="['/editar-pc/',pc.id]">Editar</button>
-              <button class="btn btn-secondary" [routerLink]="['/agregar-mantenimiento/',pc.cod]">Mantenimiento</button>
+            <div id="collapse-{{ pc.cod }}" class="collapse" aria-labelledby="heading" data-parent="#accordionExample">
+              <div class="card-body bg-light border-top">
+                <h5 class="text-center">Detalles</h5>
+                <table class="table table-sm">
+                  <tr>
+                    <th>Codigo</th>
+                    <td>{{ pc.cod }}</td>
+                  </tr>            
+                  <tr>
+                    <th>Nombre Equipo</th>
+                    <td>{{ pc.nombre_equipo }}</td>
+                  </tr>
+                  <tr>
+                    <th>IP Fija</th>
+                    <td>{{ pc.ip_fija }}</td>
+                  </tr>
+                  <tr>
+                    <th>TeamViewer</th>
+                    <td>{{ pc.teamviewer }}</td>
+                  </tr>
+                  <tr>
+                    <th>Ultimo mant.</th>
+                    <td></td>
+                  </tr>
+                </table>
+                
+                <div class="text-center">
+                  <button class="btn btn-dark mr-2" [routerLink]="['/editar-pc/',pc.id]">Editar</button>
+                  <button class="btn btn-secondary" [routerLink]="['/agregar-mantenimiento/',pc.cod]">Mantenimiento</button>
+              </div>
+              </div>
+            </div>
           </div>
-          </div>
+          
         </div>
       </div>
-    </div>
-    
-    <div class="col-6 col-md-2 text-center">
-      <div class="card shadow">
-        <div class="card-body">
-          <i routerLink="/agregar-pc" class="fas fa-plus-circle fa-2x text-secondary"></i>
-          
+      
+      <div class="col-6 col-md-2 text-center">
+        <div class="card shadow add-comp" routerLink="/agregar-pc" >
+          <div class="card-body">
+            <i class="fas fa-plus-circle fa-2x text-secondary"></i>
+            
+          </div>
         </div>
       </div>
     </div>

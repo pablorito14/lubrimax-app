@@ -1,4 +1,9 @@
-
+<div class="text-center" *ngIf="loadingForm">
+  <span class="h4 text-light mr-2">Cargando</span>
+  <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
+</div>
+  
+<div *ngIf="!loadingForm" class="animated fadeIn">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card shadow-lg">
@@ -10,7 +15,7 @@
               <div class="col-7 pr-0">
                 <div class="form-group">
                   <label for="">Nombre de TeamViewer</label>
-                  <input type="text" class="form-control" #tw (keyup)="setMayus(tw)"
+                  <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
                       formControlName="teamviewer" [class.is-invalid]="submitted && createOrdenador.get('teamviewer')?.invalid">
                   <div class="invalid-feedback">
                     Ingresar identificacion en TeamViewer
@@ -32,32 +37,49 @@
             <div class="form-group">
               <label for="">Nombre del equipo</label>
               <input type="text" class="form-control"
+                      oninput="this.value = this.value.toUpperCase()"
                       formControlName="nombre_equipo">
             </div>
-            <div class="form-group">
-              <label for="">IP fija</label>
-              <input type="text" class="form-control"
-                  formControlName="ip_fija" [class.is-invalid]="createOrdenador.get('ip_fija')?.invalid">
-              <div class="invalid-feedback">
-                Formato de IP no válido. Ej: xxx.xxx.xxx.xxx
+            
+
+            <div class="row">
+              <div class="col-12 col-md-7 pr-0">
+                <div class="form-group">
+                  <label for="">IP fija</label>
+                  <input type="text" class="form-control"
+                      formControlName="ip_fija" [class.is-invalid]="createOrdenador.get('ip_fija')?.invalid">
+                  <div class="invalid-feedback">
+                    Formato de IP no válido. <br>Ingresar valor entre 1.1.1.1 y 255.255.255.255
+                  </div>
+                </div>
               </div>
+              <div class="col-12 col-md-5">
+                <div class="form-group">
+                  <label for="">Tipo de computadora</label>
+                  <select formControlName="tipo" class="form-control"
+                      [class.is-invalid]="submitted && createOrdenador.get('tipo')?.invalid">
+                    <option value="desktop">Escritorio</option>
+                    <option value="laptop">Notebook</option>
+                    <option value="server">Servidor</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Seleccionar tipo de computadora
+                  </div>
+                </div>
+              </div>
+              
             </div>
-            <!-- {{ createOrdenador.get('ip_fija')?.errors | json }} -->
-            <div class="form-group">
-              <label for="">Tipo de computadora</label>
-              <select formControlName="tipo" class="form-control"
-                  [class.is-invalid]="submitted && createOrdenador.get('tipo')?.invalid">
-                <option value="desktop">Escritorio</option>
-                <option value="laptop">Notebook</option>
-                <option value="server">Servidor</option>
-              </select>
-              <div class="invalid-feedback">
-                Seleccionar tipo de computadora
-              </div>
+            
+            <div class="form-check text-center-">
+              <input class="form-check-input" type="checkbox" id="estado" formControlName="estado">
+              <label class="form-check-label" for="estado">
+                Computadora en uso
+              </label>
             </div>
             
             <div class="text-center mt-3">
               <app-back-button></app-back-button>
+              <!-- <button type="submit" [disabled]="submitted" class="btn btn-info">Guardar <i *ngIf="submitted" class="fas fa-spinner fa-spin"></i></button> -->
               <button type="submit" [disabled]="loading" class="btn btn-info">Guardar <i *ngIf="loading" class="fas fa-spinner fa-spin"></i></button>
             </div>
           </form>
@@ -65,4 +87,4 @@
       </div>
     </div>
   </div>
-
+</div>

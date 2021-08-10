@@ -19,6 +19,7 @@ export class MantenimientoPcComponent implements OnInit {
   fechaActual:Date = new Date();
   
   loading:boolean = false;
+  
   submitted:boolean = false;
   validTareas:boolean = true;
   validCompu:boolean = false;
@@ -52,7 +53,7 @@ export class MantenimientoPcComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
+    this.toastr.warning('actualizar fecha de ultimo mantenimiento a la pc');
     this.editar();
   }
 
@@ -135,10 +136,19 @@ export class MantenimientoPcComponent implements OnInit {
     this._mantenimientosService
         .agregarMantenimiento(mant)
         .then(() => {
-          this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
-          this.loading = false;
-          this.router.navigate(['/historial-mant']);
-
+          // this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
+          // this.loading = false;
+          // this.router.navigate(['/historial-mant']);
+          this._mantenimientosService.agregarMantenimiento(mant)
+              .then(() => {
+                this.toastr.success("Mantenimiento agregado. AGREGAR COSTO CUANDO MANTENIMIENTO AGREGADO");
+                this.loading = false;
+                this.router.navigate(['/historial-mant']);
+              })
+              .catch(error => {
+                this.toastr.error("catch agregarMantenimiento()");
+                this.loading = false;      
+              })
 
         })
         .catch(error => {
@@ -157,8 +167,6 @@ export class MantenimientoPcComponent implements OnInit {
           this.toastr.success("Mantenimiento Actualizado");
           this.loading = false;
           this.router.navigate(['/historial-mant']);
-
-
         })
         .catch(error => {
           this.toastr.error("catch agregarMantenimiento()");
@@ -199,9 +207,10 @@ export class MantenimientoPcComponent implements OnInit {
               malware: arrData['accion']['malware'],
               updates: arrData['accion']['updates'],
               other: arrData['accion']['other'].replace('<br />','\n')
-            })
+            });
+            
           })
-    }
+    } 
   }
 
 }

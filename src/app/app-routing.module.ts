@@ -6,6 +6,7 @@ import { MantenimientoPcComponent } from './pages/mantenimiento-pc/mantenimiento
 import { HistorialMantComponent } from './pages/historial-mant/historial-mant.component';
 import { ListCostosComponent } from './pages/list-costos/list-costos.component';
 import { ListFacturacionesComponent } from './pages/list-facturaciones/list-facturaciones.component';
+import { CuentaCorrienteComponent } from './pages/cuenta-corriente/cuenta-corriente.component';
 
 const routes: Routes = [
   {path: 'home',component:InicioComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'agregar-mantenimiento',component:MantenimientoPcComponent},
   {path: 'agregar-mantenimiento/:id',component:MantenimientoPcComponent},
   {path: 'editar-mantenimiento/:id/:mant',component:MantenimientoPcComponent},
+  {path: 'cuenta-corriente',component:CuentaCorrienteComponent},
   {path: 'historial-costos',component:ListCostosComponent},
   {path: 'historial-facturaciones',component:ListFacturacionesComponent},
 

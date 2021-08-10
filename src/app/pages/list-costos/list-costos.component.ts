@@ -11,10 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 export class ListCostosComponent implements OnInit {
   createConcepto:FormGroup;
   conceptos:any = [];
+  uActualizacion:Date = new Date();
   editing:boolean = false;
   loading:boolean = false;
+  submitted:boolean = false;
+  disable_comp:boolean = true;
   title:string = 'Agregar concepto';
   action:string = '';
+  
   constructor(
     private _costosService:CostosService,
     private fb:FormBuilder,
@@ -24,6 +28,7 @@ export class ListCostosComponent implements OnInit {
         id:[''],
         concepto:['',Validators.required],
         valor: ['',Validators.required]
+        
       })
      }
 
@@ -37,7 +42,9 @@ export class ListCostosComponent implements OnInit {
       data.forEach((element:any) => {
         this.conceptos.push({
           id:element.payload.doc.id,
-          ...element.payload.doc.data()
+          concepto: element.payload.doc.data()['concepto'],
+          valor: element.payload.doc.data()['valor'],
+          ultimaActualizacion: new Date(element.payload.doc.data().ultimaActualizacion.seconds*1000)
         });
       });
     })
@@ -45,19 +52,23 @@ export class ListCostosComponent implements OnInit {
 
   habilitarEditar(id?:string){
     this.editing = true;
-
-    if(id){
-      this.title = 'Editar concepto';
-      this.llenarForm(id);
-    } else {
-      this.llenarForm();
-    }
+    this.llenarForm(id);
+    // if(id){
+    //   this.title = 'Editar concepto';
+    //   this.llenarForm(id);
+    // } else {
+    //   this.llenarForm();
+    // }
   }
 
   llenarForm(id?:string){
+    
     if(id){
+      this.action = 'edit';
+      this.title = 'Editar concepto';
       this._costosService.getConcepto(id)
         .subscribe(data => {
+          this.uActualizacion = new Date(data.payload.data().ultimaActualizacion.seconds*1000);
           this.createConcepto.setValue({
             id: data.payload.id,
             concepto:data.payload.data()['concepto'],
@@ -65,6 +76,7 @@ export class ListCostosComponent implements OnInit {
           });
         });
     } else {
+      this.action = 'add';
       this.createConcepto.setValue({
         id: '',
         concepto: '',
@@ -74,10 +86,16 @@ export class ListCostosComponent implements OnInit {
   }
 
   guardarEditarConcepto(){
+    this.submitted = true;
+    if(this.createConcepto.invalid){
+      return;
+    }
+    
     var id = this.createConcepto.value.id
     var costo = {
       concepto: this.createConcepto.value.concepto,
-      valor: this.createConcepto.value.valor
+      valor: this.createConcepto.value.valor,
+      ultimaActualizacion: new Date()
     }
 
     if(id != ''){
@@ -89,9 +107,10 @@ export class ListCostosComponent implements OnInit {
 
   guardarConcepto(costo:any){
     this.loading = true;
+
     this._costosService.agregarConcepto(costo)
         .then(() => {
-          this.toastr.success('Concepto actualizado');
+          this.toastr.success('Concepto agregado');
           this.llenarForm();
           this.editing = false;
         })

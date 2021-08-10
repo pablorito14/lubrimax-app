@@ -5,7 +5,7 @@
 
 <!-- <div class="animated fadeIn"> -->
   <div class="row justify-content-center">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-6">
       <div class="card shadow mb-3 animated fadeIn">
         <div class="card-body">
           <p class="h5">Lista de precios 
@@ -15,6 +15,7 @@
           <table class="table borderless">
             <thead>
               <tr>
+                <th class="d-none d-md-block">Ultima actualizacion</th>
                 <th>Concepto</th>
                 <th class="text-right">Valor</th>
                 <th></th>
@@ -22,6 +23,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let c of conceptos">
+                <td class="d-none d-md-block">{{ c.ultimaActualizacion | date:'longDate' }}</td>  
                 <td>{{ c.concepto }}</td>
                 <td class="text-right">{{ c.valor | currency: 'ARS':'symbol':'2.0-0'}}</td>
                 <td class="text-right"><i class="fas fa-edit fa-lg text-info" (click)="habilitarEditar(c.id)"></i></td>
@@ -36,9 +38,17 @@
       <div class="card shador mb-3 animated fadeIn" *ngIf="editing">
         <div class="card-body">
           <p class="h5 mb-3">{{ title }} </p>
+          <div *ngIf="submitted && createConcepto.invalid" class="alert alert-danger p-2">Todos los campos son requeridos</div>
           <form [formGroup]="createConcepto" (ngSubmit)="guardarEditarConcepto()">
             <input type="hidden" 
                     formControlName="id">
+            
+            <div class="form-group d-block d-md-none text-center" *ngIf="action == 'edit'">
+              <div class="alert alert-warning p-1">
+                Ultima actualizacion: <br>
+                {{ uActualizacion | date:'longDate' }}
+              </div>
+            </div>
             <div class="form-group">
               <label for="">Concepto</label>
               <input type="text" class="form-control"

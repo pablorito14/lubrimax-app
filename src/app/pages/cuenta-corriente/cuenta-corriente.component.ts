@@ -53,7 +53,7 @@ export class CuentaCorrienteComponent implements OnInit {
         +'/'+this.fechaActual.getFullYear(),
       computadora: ['',Validators.required],
       concepto: ['',Validators.required],
-      valor: ['']
+      valor: ['',Validators.required]
     });
     this.createCosto.get('concepto')?.valueChanges.subscribe(c => {
       if(c != 'transferencia' && c != 'chequeElec'){
@@ -66,8 +66,6 @@ export class CuentaCorrienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.router.url);
-    // console.log(this.aRoute.snapshot.paramMap.get('id'));
     this.cargarDatos();
   }
 
@@ -84,6 +82,9 @@ export class CuentaCorrienteComponent implements OnInit {
     this.loadingSubmit = true;
 
     if(this.createCosto.invalid){
+      if(!this.createCosto.get('computadora')?.valid){
+        this.cmb.validar(true);
+      }
       this.loadingSubmit = false;
       return;
     }

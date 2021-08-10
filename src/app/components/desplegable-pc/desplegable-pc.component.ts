@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class DesplegablePcComponent implements OnInit,ControlValueAccessor {
   pc: string = '';
   compValid:boolean = false;
+  is_invalid:boolean = false;
   // comp:string = '';
   arrPC: any[] = [];
   onChange = (_:any) => {};
@@ -40,6 +41,10 @@ export class DesplegablePcComponent implements OnInit,ControlValueAccessor {
     }  
   }
 
+  validar(valid:boolean){
+    this.is_invalid = valid;
+  }
+
   resetComp():void{
     this.compValid = false;
   }
@@ -54,6 +59,7 @@ export class DesplegablePcComponent implements OnInit,ControlValueAccessor {
       this.onTouch();
       this.onChange(this.pc);
       this.compValid = true;
+      this.is_invalid = false;
     }
   }
 

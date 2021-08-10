@@ -38,7 +38,7 @@
       <div class="card shador mb-3 animated fadeIn" *ngIf="editing">
         <div class="card-body">
           <p class="h5 mb-3">{{ title }} </p>
-          <div *ngIf="submitted && createConcepto.invalid" class="alert alert-danger p-2">Todos los campos son requeridos</div>
+          <!-- <div *ngIf="submitted && createConcepto.invalid" class="alert alert-danger p-2">Todos los campos son requeridos</div> -->
           <form [formGroup]="createConcepto" (ngSubmit)="guardarEditarConcepto()">
             <input type="hidden" 
                     formControlName="id">
@@ -52,13 +52,14 @@
             <div class="form-group">
               <label for="">Concepto <b class="text-danger">**</b></label>
               <input type="text" class="form-control"
-                    formControlName="concepto">
+                    formControlName="concepto" [class.is-invalid]="submitted && createConcepto.get('concepto')?.invalid">
             </div>
 
             <div class="form-group">
               <label for="">Valor <b class="text-danger">**</b></label>
               <input type="number" class="form-control"
-                    formControlName="valor">
+                    formControlName="valor" [class.is-invalid]="submitted && createConcepto.get('valor')?.invalid">
+                    <!-- {{ createConcepto.get('valor')?.errors | json }} -->
             </div>
             <p><b class="text-danger">**</b> Campos requeridos</p>
             <div class="text-center">

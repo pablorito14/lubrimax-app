@@ -12,33 +12,38 @@
             Agregar costo
           </p>
           <form [formGroup]="createCosto" (ngSubmit)="agregarCosto()">
-            <div class="row justify-content-center">
-              <div class="col-12 px-1">
+            <div class="row justify-content-center align-items-end">
+              <!-- <div class="col-12 px-1">
                 <div *ngIf="submitted && createCosto.invalid" 
                     class="alert alert-danger p-1 text-center">Todos los campos son requeridos</div>
-              </div>
+              </div> -->
               <div class="col-6 col-md mb-2 px-1">
+                <label for="">Fecha</label>
                 <app-datepicker formControlName="fecha"
                     ></app-datepicker>
               </div>
               <div class="col-6 col-md mb-2 px-1">
+                <label for="">Observacion</label>
                 <app-desplegable-pc formControlName="computadora"></app-desplegable-pc>
+                
               </div>
               <div class="col-6 col-md mb-2 px-1">
-                <select class="form-control" formControlName="concepto" #conc (change)="cambiarConc(conc.value)">
+                <label for="">Concepto</label>
+                <select class="form-control" formControlName="concepto" #conc 
+                        (change)="cambiarConc(conc.value)" [class.is-invalid]="submitted && !createCosto.get('concepto')?.valid">
                   <option value="" [disabled]="concValid">Concepto</option>
                   <option *ngFor="let c of arrConceptos" value="{{ c }}">{{ c }}</option>
-                  
                   <option value="transferencia">Transferencia</option>
                   <option value="chequeElec">Cheque Elec.</option>
                 </select>
                 
               </div>
               <div class="col-6 col-md mb-2 px-1">
-                <input type="number" class="form-control" placeholder="Valor"
-                    formControlName="valor">
+                <label for="">Valor</label>
+                <input type="number" class="form-control"
+                    formControlName="valor" [class.is-invalid]="submitted && !createCosto.get('valor')?.valid">
               </div>
-              <div class="col-6 col-md px-md-1 text-center">
+              <div class="col-6 col-md mb-md-2 px-md-1 text-center">
                 <button type="submit" [disabled]="loadingSubmit" class="btn btn-info btn-block">
                   Guardar <i *ngIf="loadingSubmit" class="fas fa-spinner fa-spin"></i>
                 </button>

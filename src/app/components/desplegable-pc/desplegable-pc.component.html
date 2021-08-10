@@ -1,8 +1,11 @@
-<select class="form-control" #comp (change)="cambiarComp(comp.value)">
+<select class="form-control" #comp 
+				(change)="cambiarComp(comp.value)"
+				[class.is-invalid]="is_invalid">
 	<option value="" [disabled]="compValid" [selected]="!compValid">Seleccionar PC</option>
-	<option *ngIf="vista == '/historial-costos'">Pago</option>
+	<option *ngIf="vista == '/cuenta-corriente'">Pago</option>
 	<option *ngFor="let pc of arrPC" 
 				value="{{ pc.cod }}" 
 				[selected]="pc.cod == computadora">{{ pc.nombre }}</option>
 
 </select>
+

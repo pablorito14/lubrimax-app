@@ -11,19 +11,19 @@
           <h4 class="text-center mb-3">{{ titulo }}</h4>
           <!-- <div class="alert alert-danger p-1 mt-3" *ngIf="submitted && createOrdenador.invalid" >Todos los campos son requeridos</div> -->
           <form [formGroup]="createOrdenador" (ngSubmit)="agregarEditarOrdenador()">
-            <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && createOrdenador.invalid">Completa los campos requeridos</div>
+            <!-- <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && createOrdenador.invalid">Completa los campos requeridos</div> -->
             
             <div class="row">
               <div class="col-7 pr-0">
                 <div class="form-group">
                   <label for="">Nombre de TeamViewer <b class="text-danger">**</b></label>
-                  <!-- <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="teamviewer" [class.is-invalid]="submitted && createOrdenador.get('teamviewer')?.invalid"> -->
                   <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="teamviewer">
-                  <div class="invalid-feedback">
+                      formControlName="teamviewer" [class.is-invalid]="submitted && createOrdenador.get('teamviewer')?.invalid">
+                  <!-- <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
+                      formControlName="teamviewer"> -->
+                  <!-- <div class="invalid-feedback">
                     Ingresar identificacion en TeamViewer
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-5">
@@ -54,16 +54,16 @@
               <div class="col-12 col-md-5">
                 <div class="form-group">
                   <label for="">Tipo de computadora <b class="text-danger">**</b></label>
-                  <!-- <select formControlName="tipo" class="form-control"
-                      [class.is-invalid]="submitted && createOrdenador.get('tipo')?.invalid"> -->
-                  <select formControlName="tipo" class="form-control">
+                  <select formControlName="tipo" class="form-control"
+                      [class.is-invalid]="submitted && createOrdenador.get('tipo')?.invalid">
+                  <!-- <select formControlName="tipo" class="form-control"> -->
                     <option value="desktop">Escritorio</option>
                     <option value="laptop">Notebook</option>
                     <option value="server">Servidor</option>
                   </select>
-                  <div class="invalid-feedback">
+                  <!-- <div class="invalid-feedback">
                     Seleccionar tipo de computadora
-                  </div>
+                  </div> -->
                 </div>
               </div>
               

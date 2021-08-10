@@ -19,6 +19,8 @@ export class CuentaCorrienteService {
 
   getCuentaCorriente():Observable<any>{
     return this.firestore.collection('ctaCte', 
-        ref => ref.orderBy('fecha','desc')).snapshotChanges();
+        ref => 
+          ref.orderBy('fecha','desc').orderBy('fechaCreacion','desc'))
+      .snapshotChanges();
   }
 }

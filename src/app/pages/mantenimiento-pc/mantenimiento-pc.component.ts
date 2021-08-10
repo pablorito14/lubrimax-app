@@ -7,6 +7,7 @@ import { MantenimientosService } from '../../services/mantenimientos.service';
 // import { DatepickerComponent } from '../../components/datepicker';
 import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { OrdenadoresService } from '../../services/ordenadores.service';
+import { DesplegablePcComponent } from '../../components/desplegable-pc/desplegable-pc.component';
 
 @Component({
   selector: 'app-mantenimiento-pc',
@@ -27,6 +28,9 @@ export class MantenimientoPcComponent implements OnInit {
   
   @ViewChild(DatepickerComponent)
   dtp!: DatepickerComponent;
+
+  @ViewChild(DesplegablePcComponent)
+  cmb!: DesplegablePcComponent
 
   constructor(
       private fb:FormBuilder,
@@ -103,8 +107,10 @@ export class MantenimientoPcComponent implements OnInit {
         this.createMant.value.malware ||
         this.createMant.value.updates ||
         this.createMant.value.other != ''){
+      this.validTareas = true;
       return true;
     } else {
+      this.validTareas = false;
       return false;
     }
   }
@@ -113,9 +119,12 @@ export class MantenimientoPcComponent implements OnInit {
     this.submitted = true;
     
     if(this.createMant.invalid){
+      if(!this.createMant.get('computadora')?.valid){
+        this.cmb.validar(true);
+      }
       return;
     } else if(!this.customValidator()){
-      this.validTareas = this.customValidator();
+      // this.validTareas = this.customValidator();
       return;
     }
       

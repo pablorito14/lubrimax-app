@@ -8,8 +8,8 @@
           <h4 class="text-center">{{ titulo }}</h4>
 
           <form [formGroup]="createMant" (ngSubmit)="agregarEditarMant()">
-            <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && createMant.invalid">Elegi una computadora</div>
-            <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && !validTareas">Elegi al menos una tarea realizada</div>
+            <!-- <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && createMant.invalid">Elegi una computadora</div> -->
+            <!-- <div class="alert alert-danger text-center p-1 mt-3" *ngIf="submitted && !validTareas">Elegi al menos una tarea realizada</div> -->
             <div class="row my-3-">
               <div class="col-12 col-md-5">
                 <label class="mt-3">Computadora <b class="text-danger">**</b></label>
@@ -19,29 +19,37 @@
                 <app-datepicker formControlName="fecha"></app-datepicker>
                 
                 <label for="" class="mt-3">Tareas realizadas <b class="text-danger">**</b></label>
+                
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="archivos" formControlName="archivos">
+                  <input class="form-check-input" type="checkbox" id="archivos" 
+                        formControlName="archivos" (change)="customValidator()">
                   <label class="form-check-label" for="archivos">
                     Limpieza de archivos temporales
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="registro" formControlName="registro">
+                  <input class="form-check-input" type="checkbox" value="" id="registro" 
+                        formControlName="registro" (change)="customValidator()">
                   <label class="form-check-label" for="registro">
                     Limpieza de registro
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="malware" formControlName="malware">
+                  <input class="form-check-input" type="checkbox" value="" id="malware" 
+                        formControlName="malware" (change)="customValidator()">
                   <label class="form-check-label" for="malware">
                     Control de malware
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="updates" formControlName="updates">
+                  <input class="form-check-input" type="checkbox" value="" id="updates" 
+                        formControlName="updates" (change)="customValidator()">
                   <label class="form-check-label" for="updates">
                     Control de actualizaciones
                   </label>
+                </div>
+                <div class="invalid-task mb-3" *ngIf="!validTareas">
+                  Elegi al menos una tarea realizada
                 </div>
               </div>
               <div class="col-12 col-md-7 mt-3 mt-md-0">

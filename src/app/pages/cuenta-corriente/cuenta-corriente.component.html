@@ -39,8 +39,8 @@
                     formControlName="valor">
               </div>
               <div class="col-6 col-md px-md-1 text-center">
-                <button type="submit" [disabled]="submitted" class="btn btn-info btn-block">
-                  Guardar <i *ngIf="submitted" class="fas fa-spinner fa-spin"></i>
+                <button type="submit" [disabled]="loadingSubmit" class="btn btn-info btn-block">
+                  Guardar <i *ngIf="loadingSubmit" class="fas fa-spinner fa-spin"></i>
                 </button>
               </div>
               

@@ -50,17 +50,17 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="">Concepto</label>
+              <label for="">Concepto <b class="text-danger">**</b></label>
               <input type="text" class="form-control"
                     formControlName="concepto">
             </div>
 
             <div class="form-group">
-              <label for="">Valor</label>
+              <label for="">Valor <b class="text-danger">**</b></label>
               <input type="number" class="form-control"
                     formControlName="valor">
             </div>
-          
+            <p><b class="text-danger">**</b> Campos requeridos</p>
             <div class="text-center">
               <button type="submit" [disabled]="loading" class="btn btn-info">
                 Guardar 

@@ -16,6 +16,7 @@ export class CuentaCorrienteComponent implements OnInit {
   createCosto:FormGroup;
 
   loading:boolean = true;
+  loadingSubmit:boolean = false;
   submitted:boolean = false;
   deleting:boolean = false;
   id_deleting:string= '';
@@ -80,9 +81,10 @@ export class CuentaCorrienteComponent implements OnInit {
 
   agregarCosto(){
     this.submitted = true;
+    this.loadingSubmit = true;
 
     if(this.createCosto.invalid){
-      this.submitted = false;
+      this.loadingSubmit = false;
       return;
     }
 
@@ -103,6 +105,7 @@ export class CuentaCorrienteComponent implements OnInit {
         .then(() => {
           this.toastr.success('Cuenta corriente actualizada');
           this.submitted = false;
+          this.loadingSubmit = false;
           this.resetForm();
           
         })

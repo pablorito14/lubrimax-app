@@ -2,10 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DatepickerComponent } from 'src/app/components/datepicker/datepicker.component';
+
 import { CostosService } from '../../services/costos.service';
 import { DesplegablePcComponent } from '../../components/desplegable-pc/desplegable-pc.component';
 import { CuentaCorrienteService } from '../../services/cuenta-corriente.service';
+import { InputDateComponent } from '../../components/input-date/input-date.component';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cuenta-corriente',
@@ -22,14 +25,14 @@ export class CuentaCorrienteComponent implements OnInit {
   id_deleting:string= '';
   concValid:boolean = false;
 
-  fechaActual:Date = new Date();
+  fechaActual_borrar:Date = new Date();
 
   arrConceptos:any;
   ctaCte:any = [];
   vCtaCte:number = 0;
 
-  @ViewChild(DatepickerComponent)
-  dtp!: DatepickerComponent;
+  @ViewChild(InputDateComponent)
+  dtp!: InputDateComponent
 
   @ViewChild(DesplegablePcComponent)
   cmb!: DesplegablePcComponent;
@@ -48,9 +51,7 @@ export class CuentaCorrienteComponent implements OnInit {
   
     
     this.createCosto = this.fb.group({
-      fecha:this.fechaActual.getDate()
-        +'/'+(this.fechaActual.getMonth()+1)
-        +'/'+this.fechaActual.getFullYear(),
+      fecha: moment().format('YYYY-MM-DD'),
       computadora: ['',Validators.required],
       concepto: ['',Validators.required],
       valor: ['',Validators.required]
@@ -68,8 +69,6 @@ export class CuentaCorrienteComponent implements OnInit {
   ngOnInit(): void {
     this.cargarDatos();
   }
-
-  
 
   cambiarConc(value:string):void{
     if(value){
@@ -89,49 +88,37 @@ export class CuentaCorrienteComponent implements OnInit {
       return;
     }
 
-    const fecha = this.createCosto.value.fecha;// formato Date cuando recibe un dato
-    const arrFecha = fecha.split('/')
+    const fecha = this.createCosto.value.fecha;
+    const arrFecha = fecha.split('-');
 
     var costo:any = {
-      fecha: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+      // fecha: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+      fecha: new Date(arrFecha[0],arrFecha[1]-1,arrFecha[2],0,0,0),
       computadora: this.createCosto.value.computadora,
       concepto: this.createCosto.value.concepto,
       valor:this.createCosto.value.valor,
       fechaCreacion: new Date()
     }
 
-    // console.log(costo);
-
     this._ctaCteservice.guardarCosto(costo)
         .then(() => {
           this.toastr.success('Cuenta corriente actualizada');
           this.submitted = false;
           this.loadingSubmit = false;
+          this.dtp.resetFecha();
           this.resetForm();
-          
         })
         .catch(error => {
-          this.toastr.error('catch agregarCosto()');
+          this.toastr.error(error);
         })
 
   }
 
   
   resetForm(){
-    let fecha = new Date();
-    this.dtp.setFecha(
-      new Date(
-        fecha.getFullYear(),
-        fecha.getMonth(),
-        fecha.getDate(),
-        0,0,0
-        )
-      );
     this.cmb.resetComp();
     this.createCosto.setValue({
-      fecha:this.fechaActual.getDate()
-        +'/'+(this.fechaActual.getMonth()+1)
-        +'/'+this.fechaActual.getFullYear(),
+      fecha:moment().format('YYYY-MM-DD'),
       computadora:'',
       concepto: '',
       valor: ''

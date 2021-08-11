@@ -13,14 +13,9 @@
           </p>
           <form [formGroup]="createCosto" (ngSubmit)="agregarCosto()">
             <div class="row justify-content-center align-items-end">
-              <!-- <div class="col-12 px-1">
-                <div *ngIf="submitted && createCosto.invalid" 
-                    class="alert alert-danger p-1 text-center">Todos los campos son requeridos</div>
-              </div> -->
               <div class="col-6 col-md mb-2 px-1">
                 <label for="">Fecha</label>
-                <app-datepicker formControlName="fecha"
-                    ></app-datepicker>
+                  <app-input-date formControlName="fecha"></app-input-date>
               </div>
               <div class="col-6 col-md mb-2 px-1">
                 <label for="">Observacion</label>

@@ -12,10 +12,10 @@ import { EditarPcComponent } from './pages/editar-pc/editar-pc.component';
 import { MantenimientoPcComponent } from './pages/mantenimiento-pc/mantenimiento-pc.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { HistorialMantComponent } from './pages/historial-mant/historial-mant.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
+// import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { InputComponent } from './components/input/input.component';
 import { DesplegablePcComponent } from './components/desplegable-pc/desplegable-pc.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
@@ -43,7 +43,6 @@ moment.locale('es');
     EditarPcComponent,
     MantenimientoPcComponent,
     HistorialMantComponent,
-    DatepickerComponent,
     InputComponent,
     DesplegablePcComponent,
     BackButtonComponent,
@@ -61,11 +60,12 @@ moment.locale('es');
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    BsDatepickerModule.forRoot(),
     MomentModule
     
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es-AR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

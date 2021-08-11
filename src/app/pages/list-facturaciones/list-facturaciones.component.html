@@ -3,48 +3,18 @@
   <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
 </div>
 
-<div *ngIf="!loading" class="animated animate__bounceInDown">
-  <div class="row">
-    <div class="col-4">
+<div *ngIf="!loading" class="animated fadeIn">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-4">
       <div class="card shadow mb-3">
-        <div class="card-body">
-          <div class="form-group">
-            <!-- <div class="form-control"> -->
-              <form [formGroup]="testFecha" (ngSubmit)="guardarNewDate()">
-                <!-- <input class="form-control" type="date" 
-                formControlName="fecha"
-                (change)="obtenerFecha()"> -->
-                <app-input-date formControlName="fecha"></app-input-date>
-                <button type="submit" class="btn btn-primary">Test</button>
-              </form>
-              {{ myDate | json }}
-            <!-- </div> -->
-          </div>
-        </div>
+        <div class="card-body"></div>
       </div>
       
     </div>
     <div class="col-12">
       <div class="card shadow mb-3">
         <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Fecha (Str)</th>
-                <th>Fecha (Date)</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let p of datosPrueba">
-              <tr>
-                <td>{{ p.id }}</td>
-                <td>{{ p.strDate }}</td>
-                <td>{{ (p.date.seconds*1000) | date:'longDate' }}</td>
-                <td><button class="btn bt-sm btn-info" (click)="cargarFecha(p.id)">editar</button></td>
-              </tr>
-            </tbody>
-          </table>
+          
         </div>
       </div>
     </div>

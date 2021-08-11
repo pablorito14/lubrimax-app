@@ -23,4 +23,14 @@ export class CuentaCorrienteService {
           ref.orderBy('fecha','desc').orderBy('fechaCreacion','desc'))
       .snapshotChanges();
   }
+
+  guardarPrueba(costo:any):Promise<any>{
+    return this.firestore.collection('newDate').add(costo);
+  }
+
+  getDatosPrueba():Observable<any>{
+    return this.firestore.collection('newDate').snapshotChanges();
+  }
+
+  
 }

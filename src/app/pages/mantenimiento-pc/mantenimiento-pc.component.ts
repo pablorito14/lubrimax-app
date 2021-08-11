@@ -210,7 +210,7 @@ export class MantenimientoPcComponent implements OnInit {
           .subscribe(data => {
             let arrData = data.payload.data();
             var fechaMant = new Date(arrData['fUnix']['seconds']*1000);
-            
+            console.log(arrData['fUnix']['seconds']);
             this.dtp.setFecha(
               new Date(
                 fechaMant.getFullYear(),

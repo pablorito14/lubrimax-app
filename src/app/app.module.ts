@@ -21,14 +21,19 @@ import { DesplegablePcComponent } from './components/desplegable-pc/desplegable-
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { ComputadoraPipe } from './pipes/computadora.pipe';
 
-import localeEs from '@angular/common/locales/es-AR';
+
 import { registerLocaleData } from '@angular/common';
 import { ListFacturacionesComponent } from './pages/list-facturaciones/list-facturaciones.component';
 import { ListCostosComponent } from './pages/list-costos/list-costos.component';
 import { CuentaCorrienteComponent } from './pages/cuenta-corriente/cuenta-corriente.component';
+import { MomentModule } from 'ngx-moment';
 
+import localeEs from '@angular/common/locales/es-AR';
 registerLocaleData(localeEs);
 
+import * as moment  from 'moment';
+import { InputDateComponent } from './components/input-date/input-date.component';
+moment.locale('es');
 
 @NgModule({
   declarations: [
@@ -45,7 +50,8 @@ registerLocaleData(localeEs);
     ComputadoraPipe,
     ListFacturacionesComponent,
     ListCostosComponent,
-    CuentaCorrienteComponent
+    CuentaCorrienteComponent,
+    InputDateComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,8 @@ registerLocaleData(localeEs);
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    MomentModule
     
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],

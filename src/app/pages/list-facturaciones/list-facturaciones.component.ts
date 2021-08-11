@@ -65,11 +65,7 @@ export class ListFacturacionesComponent implements OnInit {
               ...element.payload.doc.data()
             })
           });
-          // console.log(this.datosPrueba);
         })
-    // this.testFecha.setValue({
-    //   fecha: '2021-08-10'
-    // })
   }
 
   guardarNewDate(){

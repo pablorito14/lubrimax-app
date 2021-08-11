@@ -36,26 +36,26 @@ export class InputDateComponent implements OnInit,ControlValueAccessor {
   ngOnInit(): void {
   }
 
-  obtenerFecha(fecha:any){
-    console.log(fecha);
-    // var f = new Date(fecha*1000);
-    // var d = moment().set({
-    //   'year': f.getFullYear(), 
-    //   'month': f.getMonth(),
-    //   'date': f.getDate()
-    // });
+  // obtenerFecha(fecha:any){
+  //   console.log(fecha);
+  //   // var f = new Date(fecha*1000);
+  //   // var d = moment().set({
+  //   //   'year': f.getFullYear(), 
+  //   //   'month': f.getMonth(),
+  //   //   'date': f.getDate()
+  //   // });
 
-    // console.log(d);
+  //   // console.log(d);
     
-    // this.fechaNew = d.format('YYYY-MM-DD');
-    // console.log(d.format('YYYY-MM-DD'));
-    // this.testFecha = this.fb.group({
-    //   fecha:[
-    //     d.format('YYYY-MM-DD')
-    //   ]
-    // })
+  //   // this.fechaNew = d.format('YYYY-MM-DD');
+  //   // console.log(d.format('YYYY-MM-DD'));
+  //   // this.testFecha = this.fb.group({
+  //   //   fecha:[
+  //   //     d.format('YYYY-MM-DD')
+  //   //   ]
+  //   // })
 
-  }
+  // }
 
   resetFecha(){
     var f = new Date();

@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+//servicios
 import { ToastrService } from 'ngx-toastr';
-import { DatepickerComponent } from 'src/app/components/datepicker/datepicker.component';
 import { MantenimientosService } from '../../services/mantenimientos.service';
-// import { DatepickerComponent } from '../../components/datepicker';
-import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { OrdenadoresService } from '../../services/ordenadores.service';
+//componentes
 import { DesplegablePcComponent } from '../../components/desplegable-pc/desplegable-pc.component';
+import { InputDateComponent } from '../../components/input-date/input-date.component';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-mantenimiento-pc',
@@ -26,11 +29,11 @@ export class MantenimientoPcComponent implements OnInit {
   validTareas:boolean = true;
   titulo:string = 'Agregar mantenimiento';
   
-  @ViewChild(DatepickerComponent)
-  dtp!: DatepickerComponent;
-
   @ViewChild(DesplegablePcComponent)
   cmb!: DesplegablePcComponent
+
+  @ViewChild(InputDateComponent)
+  dtp!:InputDateComponent
 
   constructor(
       private fb:FormBuilder,
@@ -41,11 +44,10 @@ export class MantenimientoPcComponent implements OnInit {
       private aRoute:ActivatedRoute
     ) { 
       this.id_pc = this.aRoute.snapshot.paramMap.get('id'); 
+
       this.createMant = this.fb.group({
         cod: [this.id_pc,Validators.required],
-        fecha: this.fechaActual.getDate()
-                +'/'+(this.fechaActual.getMonth()+1)
-                +'/'+this.fechaActual.getFullYear(),
+        fecha:moment().format('YYYY-MM-DD'),
         archivos: [false],
         registro: [false],
         malware: [false],
@@ -62,7 +64,7 @@ export class MantenimientoPcComponent implements OnInit {
 
   generarData(){
     const fecha = this.createMant.value.fecha;
-    const arrFecha = fecha.split('/')
+    const arrFecha = fecha.split('-');
 
     var other:string = this.createMant.value.other;
     if(other != ''){
@@ -74,7 +76,7 @@ export class MantenimientoPcComponent implements OnInit {
     if(this.id_mant === null){
       mant = {
         cod: this.createMant.value.cod,
-        fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+        fUnix: new Date(arrFecha[0],(arrFecha[1]-1),arrFecha[2],0,0,0),
         fechaCreacion: new Date(),
         accion:{
           archivos:this.createMant.value.archivos,
@@ -87,7 +89,7 @@ export class MantenimientoPcComponent implements OnInit {
     } else {
       mant = {
         cod: this.createMant.value.cod,
-        fUnix: new Date(arrFecha[2],(arrFecha[1]-1),arrFecha[0],0,0,0),
+        fUnix: new Date(arrFecha[0],(arrFecha[1]-1),arrFecha[2],0,0,0),
         accion:{
           archivos:this.createMant.value.archivos,
           registro:this.createMant.value.registro,
@@ -138,7 +140,6 @@ export class MantenimientoPcComponent implements OnInit {
 
   agregarMantenimiento(){
     const mant:any = this.generarData();
-    
     this.loading = true;
     this._mantenimientosService
       .agregarMantenimiento(mant)
@@ -169,6 +170,7 @@ export class MantenimientoPcComponent implements OnInit {
   editarMantenimiento(id:string){
     // this.toastr.error('actualizar datos de id_mant: '+id);
     const mant:any = this.generarData();
+    console.log(mant);
     this.loading = true;
     this._mantenimientosService
         .editarMantenimiento(mant,id)
@@ -209,21 +211,11 @@ export class MantenimientoPcComponent implements OnInit {
       this._mantenimientosService.getMantenimiento(this.id_mant)
           .subscribe(data => {
             let arrData = data.payload.data();
-            var fechaMant = new Date(arrData['fUnix']['seconds']*1000);
-            console.log(arrData['fUnix']['seconds']);
-            this.dtp.setFecha(
-              new Date(
-                fechaMant.getFullYear(),
-                fechaMant.getMonth(),
-                fechaMant.getDate(),
-                0,0,0
-                )
-              );
+            let fechaMant = moment(arrData['fUnix']['seconds']*1000).format('YYYY-MM-DD');
+            this.dtp.setFecha(fechaMant);
             this.createMant.setValue({
               cod: arrData['cod'],
-              fecha: fechaMant.getDate()
-                +'/'+(fechaMant.getMonth()+1)
-                +'/'+fechaMant.getFullYear(),
+              fecha:fechaMant,
               archivos: arrData['accion']['archivos'],
               registro: arrData['accion']['registro'],
               malware: arrData['accion']['malware'],

@@ -3,6 +3,8 @@ import { MantenimientosService } from '../../services/mantenimientos.service';
 import { listadoMantenimientos } from '../../../helpers/generar-tablas';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/service/auth.service';
 //
 
 @Component({
@@ -13,14 +15,17 @@ import { Router } from '@angular/router';
 
 
 export class HistorialMantComponent implements OnInit {
+  user$:Observable<any> = this._authSvc.auth.user;
   mantenimientos:any[]=[];
   formFiltro:FormGroup;
   filtro :string = ''; 
   loading:boolean = true;
 
-  constructor(private _mantenimientosService:MantenimientosService,
-              private fb:FormBuilder,
-              private router:Router) {
+  constructor( 
+        private _authSvc:AuthService,
+        private _mantenimientosService:MantenimientosService,
+        private fb:FormBuilder,
+        private router:Router) {
 
     this.formFiltro = this.fb.group({
       filtro: ['']
@@ -29,6 +34,11 @@ export class HistorialMantComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user$.subscribe(data => {
+      if(!data){
+        this.router.navigate(['/login']);  
+      } 
+    });
   }
 
   filtrarResultados(){

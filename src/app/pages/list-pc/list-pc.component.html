@@ -3,8 +3,8 @@
     <span class="h4 text-light mr-2">Cargando</span>
     <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
   </div>
-  <div *ngIf="!loading" class="animated fadeIn">
-    <div class="row justify-content-center">
+  <div *ngIf="user$ | async as user" class="animated fadeIn">
+    <div *ngIf="!loading" class="row justify-content-center">
       
       <div class="col-12 col-md-4 mb-2" *ngFor="let pc of computadoras">
         <div class="accordion" id="accordionExample">
@@ -41,7 +41,8 @@
                   </tr>
                   <tr>
                     <th>Ultimo mant.</th>
-                    <td>{{ pc.uMant | date:'longDate' }}</td>
+                    <td>{{ pc.uMant }}</td>
+                    <!-- <td>{{ pc.uMant | date:'longDate' }}</td> -->
                   </tr>
                 </table>
                 
@@ -57,7 +58,7 @@
       </div>
       
       <div class="col-6 col-md-2 text-center">
-        <div class="card shadow add-comp" routerLink="/agregar-pc" >
+        <div class="card shadow mb-3 add-comp" routerLink="/agregar-pc" >
           <div class="card-body">
             <i class="fas fa-plus-circle fa-2x text-secondary"></i>
             

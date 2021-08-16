@@ -4,6 +4,8 @@ import { OrdenadoresService } from '../../services/ordenadores.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import localeEs from '@angular/common/locales/es';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-editar-pc',
@@ -11,6 +13,7 @@ import localeEs from '@angular/common/locales/es';
   styleUrls: ['./editar-pc.component.css']
 })
 export class EditarPcComponent implements OnInit {
+  user$:Observable<any> = this._authSvc.auth.user;
   createOrdenador:FormGroup;
   id:string | null;
   disable_cod = true;
@@ -21,6 +24,7 @@ export class EditarPcComponent implements OnInit {
 
   constructor(
       private fb:FormBuilder,
+      private _authSvc:AuthService,
       private _ordenadoresService:OrdenadoresService,
       private router:Router,
       private toastr:ToastrService,
@@ -47,23 +51,16 @@ export class EditarPcComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user$.subscribe(data => {
+      if(!data){
+        this.router.navigate(['/login']);  
+      } 
+      
+    });
     this.editar();
 
     
   }
-
-  
-  
-    
-  // setMayus(text:any){
-  //   var newTW = text.value.toUpperCase()
-  //   text.value = newTW;
-
-  //   console.log(text);
-
-  //   this.createOrdenador.get('teamviewer')?.setValue(newTW);
-    
-  // }
 
   agregarEditarOrdenador(){
     
@@ -130,7 +127,7 @@ export class EditarPcComponent implements OnInit {
           .then(() => {
             this.loading = false;
             this.toastr.success('Computadora agregada');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/computadoras']);
           })
           .catch(error => {
             console.log(error);
@@ -154,7 +151,7 @@ export class EditarPcComponent implements OnInit {
           .then(() => {
             this.loading = false;
             this.toastr.success('Datos de la computadora actualizados');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/computadoras']);
           })
           .catch(error => {
             console.log(error);

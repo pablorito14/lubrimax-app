@@ -1,0 +1,14 @@
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="card shadow mb-3">
+      <div class="card-body text-center">
+        <button class="btn btn-danger" [disabled]="processLogin" (click)="onLogin()">
+          <i class="fab fa-google"></i> Iniciar sesion
+          <i *ngIf="processLogin" class="fas fa-spinner fa-spin"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

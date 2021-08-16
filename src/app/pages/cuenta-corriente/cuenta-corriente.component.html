@@ -3,8 +3,8 @@
   <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
 </div>
 
-<div *ngIf="!loading" class="animated fadeIn">
-  <div class="row">
+<div  *ngIf="user$ | async as user" class="animated fadeIn">
+  <div *ngIf="!loading" class="row">
     <div class="col-12">
       <div class="card shadow mb-3">
         <div class="card-body">
@@ -52,8 +52,8 @@
     </div>
   </div>
 </div>
-<div *ngIf="!loading" class="animated fadeIn">
-  <div class="row justify-content-center">
+<div  *ngIf="user$ | async as user" class="animated fadeIn">
+  <div *ngIf="!loading" class="row justify-content-center">
       
     <div class="col-12">
       <div class="card shadow mb-3">

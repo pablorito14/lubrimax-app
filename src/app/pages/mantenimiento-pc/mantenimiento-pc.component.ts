@@ -11,6 +11,8 @@ import { DesplegablePcComponent } from '../../components/desplegable-pc/desplega
 import { InputDateComponent } from '../../components/input-date/input-date.component';
 
 import * as moment from 'moment';
+import { AuthService } from 'src/app/auth/service/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mantenimiento-pc',
@@ -18,6 +20,7 @@ import * as moment from 'moment';
   styleUrls: ['./mantenimiento-pc.component.css']
 })
 export class MantenimientoPcComponent implements OnInit {
+  user$:Observable<any> = this._authSvc.auth.user;
   id_mant:string | null;
   id_pc:string | null;
   createMant:FormGroup;
@@ -37,6 +40,7 @@ export class MantenimientoPcComponent implements OnInit {
 
   constructor(
       private fb:FormBuilder,
+      private _authSvc:AuthService,
       private _mantenimientosService:MantenimientosService,
       private _ordenadoresService:OrdenadoresService,
       private router:Router,
@@ -59,6 +63,12 @@ export class MantenimientoPcComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.user$.subscribe(data => {
+      if(!data){
+        this.router.navigate(['/login']);  
+      } 
+      
+    });
     this.editar();
   }
 

@@ -3,10 +3,10 @@
   <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
 </div>
   
-<div *ngIf="!loadingForm" class="animated fadeIn">
+<div *ngIf="user$ | async as user" class="animated fadeIn">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-lg">
+    <div class="col-md-8">
+      <div class="card shadow-lg mb-3">
         <div class="card-body">
           <h4 class="text-center mb-3">{{ titulo }}</h4>
           <!-- <div class="alert alert-danger p-1 mt-3" *ngIf="submitted && createOrdenador.invalid" >Todos los campos son requeridos</div> -->
@@ -16,14 +16,9 @@
             <div class="row">
               <div class="col-7 pr-0">
                 <div class="form-group">
-                  <label for="">Nombre de TeamViewer <b class="text-danger">**</b></label>
+                  <label for="">ID de TeamViewer <b class="text-danger">**</b></label>
                   <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
                       formControlName="teamviewer" [class.is-invalid]="submitted && createOrdenador.get('teamviewer')?.invalid">
-                  <!-- <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="teamviewer"> -->
-                  <!-- <div class="invalid-feedback">
-                    Ingresar identificacion en TeamViewer
-                  </div> -->
                 </div>
               </div>
               <div class="col-5">
@@ -34,12 +29,72 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="">Nombre del equipo</label>
-              <input type="text" class="form-control"
-                      oninput="this.value = this.value.toUpperCase()"
-                      formControlName="nombre_equipo">
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="">Usuario</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="">Contraseña</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
             </div>
+
+            <div class="form-group">
+              <label for="">Sistema Operativo</label>
+              <input type="text" class="form-control">
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="">Procesador</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="">Memoria RAM</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div> 
+
+            <div class="form-group">
+              <label for="">Discos</label>
+              <input type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="">Tipo de Internet</label>
+              <select class="form-control">
+                <option value=""></option>
+                <option value="">Wifi</option>
+                <option value="">Ethernet</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-7">
+                <label for="">Info adicional</label>
+                <textarea class="form-control" cols="30" rows="12"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="">Nombre del equipo</label>
+                  <input type="text" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()"
+                          formControlName="nombre_equipo">
+                </div>
+              </div>
+            </div>
+            
             <div class="row">
               <div class="col-12 col-md-7 pr-0">
                 <div class="form-group">
@@ -56,14 +111,10 @@
                   <label for="">Tipo de computadora <b class="text-danger">**</b></label>
                   <select formControlName="tipo" class="form-control"
                       [class.is-invalid]="submitted && createOrdenador.get('tipo')?.invalid">
-                  <!-- <select formControlName="tipo" class="form-control"> -->
                     <option value="desktop">Escritorio</option>
                     <option value="laptop">Notebook</option>
                     <option value="server">Servidor</option>
                   </select>
-                  <!-- <div class="invalid-feedback">
-                    Seleccionar tipo de computadora
-                  </div> -->
                 </div>
               </div>
               

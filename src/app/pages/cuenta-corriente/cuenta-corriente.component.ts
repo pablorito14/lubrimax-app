@@ -9,6 +9,8 @@ import { CuentaCorrienteService } from '../../services/cuenta-corriente.service'
 import { InputDateComponent } from '../../components/input-date/input-date.component';
 
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-cuenta-corriente',
@@ -16,6 +18,7 @@ import * as moment from 'moment';
   styleUrls: ['./cuenta-corriente.component.css']
 })
 export class CuentaCorrienteComponent implements OnInit {
+  user$:Observable<any> = this._authSvc.auth.user;
   createCosto:FormGroup;
 
   loading:boolean = true;
@@ -42,6 +45,7 @@ export class CuentaCorrienteComponent implements OnInit {
 
   constructor(
     private fb:FormBuilder,
+    private _authSvc:AuthService,
     private _costosService:CostosService,
     private _ctaCteservice:CuentaCorrienteService,
     private router:Router,
@@ -67,6 +71,11 @@ export class CuentaCorrienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user$.subscribe(data => {
+      if(!data){
+        this.router.navigate(['/login']);  
+      } 
+    });
     this.cargarDatos();
   }
 

@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CostosService } from '../../services/costos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-list-costos',
@@ -9,20 +12,26 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./list-costos.component.css']
 })
 export class ListCostosComponent implements OnInit {
+  user$:Observable<any> = this._authSvc.auth.user;
+
   createConcepto:FormGroup;
   conceptos:any = [];
   uActualizacion:Date = new Date();
   editing:boolean = false;
-  loading:boolean = false;
+  loading:boolean = true;
+  process:boolean = false;
+  
   submitted:boolean = false;
   disable_comp:boolean = true;
   title:string = 'Agregar concepto';
   action:string = '';
   
   constructor(
+    private _authSvc:AuthService,
     private _costosService:CostosService,
     private fb:FormBuilder,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private router:Router
     ){
       this.createConcepto = this.fb.group({
         id:[''],
@@ -33,6 +42,12 @@ export class ListCostosComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.user$.subscribe(data => {
+      if(!data){
+        this.router.navigate(['/login']);  
+      } 
+      
+    });
     this.cargarConceptos();
   }
 
@@ -47,6 +62,7 @@ export class ListCostosComponent implements OnInit {
           ultimaActualizacion: new Date(element.payload.doc.data().ultimaActualizacion.seconds*1000)
         });
       });
+      this.loading = false;
     })
   }
 
@@ -106,7 +122,7 @@ export class ListCostosComponent implements OnInit {
   }
 
   guardarConcepto(costo:any){
-    this.loading = true;
+    this.process = true;
 
     this._costosService.agregarConcepto(costo)
         .then(() => {
@@ -118,12 +134,12 @@ export class ListCostosComponent implements OnInit {
           this.toastr.error(error);
         })
         .finally(() => {
-          this.loading = false;
+          this.process = false;
         })
   }
 
   editarConcepto(id:string,costo:any){
-    this.loading = true;
+    this.process = true;
     this._costosService.actualizarConcepto(id,costo)
         .then(() => {
           this.toastr.success('Concepto actualizado');
@@ -134,7 +150,7 @@ export class ListCostosComponent implements OnInit {
           this.toastr.error(error);
         })
         .finally(() => {
-          this.loading = false;
+          this.process = false;
         })
   }
   

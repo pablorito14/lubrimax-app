@@ -1,10 +1,10 @@
-<!-- <div class="text-center">
+<div class="text-center" *ngIf="loading">
   <span class="h4 text-light mr-2">Cargando</span>
   <i class="h4 fas fa-sync-alt fa-spin text-light"></i>
-</div> -->
+</div>
 
-<!-- <div class="animated fadeIn"> -->
-  <div class="row justify-content-center">
+<div *ngIf="user$ | async as user" class="animated fadeIn">
+  <div *ngIf="!loading" class="row justify-content-center">
     <div class="col-12 col-md-6">
       <div class="card shadow mb-3 animated fadeIn">
         <div class="card-body">
@@ -63,9 +63,9 @@
             </div>
             <p><b class="text-danger">**</b> Campos requeridos</p>
             <div class="text-center">
-              <button type="submit" [disabled]="loading" class="btn btn-info">
+              <button type="submit" [disabled]="process" class="btn btn-info">
                 Guardar 
-                <i *ngIf="loading" class="fas fa-spinner fa-spin"></i>
+                <i *ngIf="process" class="fas fa-spinner fa-spin"></i>
               </button>
             </div>
           </form>
@@ -73,4 +73,4 @@
       </div>
     </div>
   </div>
-<!-- </div> -->
+</div>

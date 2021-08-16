@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { InicioComponent } from './pages/inicio/inicio.component';
+import { ListPcComponent } from './pages/list-pc/list-pc.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.prod';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -33,13 +33,16 @@ registerLocaleData(localeEs);
 
 import * as moment  from 'moment';
 import { InputDateComponent } from './components/input-date/input-date.component';
+import { LoginComponent } from './auth/login/login.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { NoAuthComponent } from './auth/no-auth/no-auth.component';
 moment.locale('es');
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    InicioComponent,
+    ListPcComponent,
     EditarPcComponent,
     MantenimientoPcComponent,
     HistorialMantComponent,
@@ -50,13 +53,16 @@ moment.locale('es');
     ListFacturacionesComponent,
     ListCostosComponent,
     CuentaCorrienteComponent,
-    InputDateComponent
+    InputDateComponent,
+    LoginComponent,
+    NoAuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
